@@ -57,7 +57,7 @@ const Usuarios = () => {
       </SpTable>
 
       <SpModalBasic open={openEdit} title={'Editar'}>
-        <FormRegister onSubmit={onSubmit} />
+        <FormRegister onSubmit={onSubmit} titleBtn='Editar' />
       </SpModalBasic>
 
       <SpDialog open={openDelete} title={'Eliminar'} description={'¿Desea eliminar este registro?'} onCancel={() => setOpenDelete(false)} onSubmit={handleDelete} />

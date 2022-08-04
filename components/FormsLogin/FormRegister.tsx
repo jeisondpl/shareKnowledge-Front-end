@@ -7,9 +7,10 @@ import { InputRegister } from '../../types/Usuario'
 
 interface Props {
   onSubmit: (values: InputRegister) => void
+  titleBtn?: string
 }
 
-const FormRegister = ({ onSubmit }: Props) => {
+const FormRegister = ({ onSubmit,titleBtn="Registrar" }: Props) => {
   return (
     <Formik
       enableReinitialize={false}
@@ -51,7 +52,7 @@ const FormRegister = ({ onSubmit }: Props) => {
             <FormErrorMessage nameField={'password'} error={errors} touched={touched} />
             <div></div>
             <Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
-              Registrar
+               {titleBtn}
             </Button>
           </>
         </Form>

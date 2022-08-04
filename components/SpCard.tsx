@@ -6,11 +6,9 @@ import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
-import SkipPreviousIcon from '@mui/icons-material/SkipPrevious'
-import PlayArrowIcon from '@mui/icons-material/PlayArrow'
-import SkipNextIcon from '@mui/icons-material/SkipNext'
 import Link from 'next/link'
 import VisibilityIcon from '@mui/icons-material/Visibility'
+import moment from 'moment'
 
 interface Props {
   title: string
@@ -20,7 +18,6 @@ interface Props {
 
 export default function SpCard({ title, image, url }: Props) {
   const theme = useTheme()
-
   return (
     <span style={{ cursor: 'pointer' }}>
       <Link href={url}>
@@ -31,7 +28,7 @@ export default function SpCard({ title, image, url }: Props) {
                 {title}
               </Typography>
               <Typography variant='subtitle1' color='text.secondary' component='div'>
-                Mac Miller
+                Actualizado {moment(Date.now()).format('DD MMM YYYY')}
               </Typography>
             </CardContent>
             <Box sx={{ display: 'flex', alignItems: 'center', pl: 1, pb: 1 }}>
@@ -42,7 +39,16 @@ export default function SpCard({ title, image, url }: Props) {
               {/* <IconButton aria-label='next'>{theme.direction === 'rtl' ? <SkipPreviousIcon /> : <SkipNextIcon />}</IconButton> */}
             </Box>
           </Box>
-          <CardMedia component='img' sx={{ width: '60%', height: '50' }} image={image} alt='Live from space album cover' />
+
+          <CardMedia
+            component='img'
+            style={{
+              width: 'auto',
+              maxHeight: '200px',
+            }}
+            image={image}
+            alt='Live from space album cover'
+          />
         </Card>
       </Link>
     </span>

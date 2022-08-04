@@ -51,7 +51,7 @@ export const MENU: Menu[] = [
     name: 'Inicio',
     url: '/',
     icon: <HomeIcon />,
-    image: 'https://www.gpofcu.com/uploads/1/1/7/7/117757864/published/homeequityicon.jpg?1654001119',
+    image: 'https://fasican.org/wp-content/uploads/2015/05/home-icon.png',
   },
 
   {
@@ -59,7 +59,7 @@ export const MENU: Menu[] = [
     name: 'Usuarios',
     url: '/usuarios',
     icon: <ArticleIcon />,
-    image: 'https://img.freepik.com/vector-gratis/plantilla-diseno-calendario-ano-nuevo-moderno-2022_1017-34368.jpg?w=2000',
+    image: 'https://icons.veryicon.com/png/o/internet--web/prejudice/user-128.png',
   },
   //   {
   //     id: 2,
@@ -228,19 +228,17 @@ const Sidebar = ({ children }: PRops) => {
             ))}
           </Box>
           <Box sx={{ flexGrow: 0 }}>
-            {user && (
-              <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-                <Box sx={{ display: 'flex', flexDirection: 'column', marginRight: '10px', justifyContent: 'center' }}>
-                  <span style={{ color: 'white', fontSize: '14px' }}>{user.nombre}</span>
-                  <span style={{ color: 'white', fontSize: '10px' }}>{user.rol}</span>
-                </Box>
-                <Tooltip title='Open settings'>
-                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar sx={{ bgcolor: deepPurple[500] }}>{user.nombre[0]}</Avatar>
-                  </IconButton>
-                </Tooltip>
+            <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', marginRight: '10px', justifyContent: 'center' }}>
+                <span style={{ color: 'white', fontSize: '14px' }}>{user && user.nombre}</span>
+                <span style={{ color: 'white', fontSize: '10px' }}>{user && user.rol}</span>
               </Box>
-            )}
+              <Tooltip title='Open settings'>
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar sx={{ bgcolor: deepPurple[500] }}>{user && user.nombre[0]}</Avatar>
+                </IconButton>
+              </Tooltip>
+            </Box>
 
             <Menu
               sx={{ mt: '45px' }}
