@@ -3,7 +3,9 @@ import { setContext } from '@apollo/client/link/context'
 import * as fetch from 'cross-fetch'
 
 const httpLink = createHttpLink({
-  uri: 'http://localhost:4000/',
+  // uri: 'http://localhost:4000/',
+  uri: 'https://share-knowledge-back-end-indra-deploy-jeisondiaz.vercel.app/',
+
   fetch: fetch as any,
 })
 
