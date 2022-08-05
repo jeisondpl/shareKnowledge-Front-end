@@ -10,7 +10,7 @@ import LoadinError from '../components/LoadinError'
 import { useDispatch } from 'react-redux'
 import { auth } from '../store/slices/auth'
 
-const login = () => {
+const Login = () => {
   const router = useRouter()
   const dispatch = useDispatch()
   const [mensaje, setMensaje] = useState<respMesage>()
@@ -45,4 +45,4 @@ const login = () => {
     </LayoutLogin>
   )
 }
-export default login
+export default Login
