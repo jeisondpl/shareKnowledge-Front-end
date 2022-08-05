@@ -32,6 +32,7 @@ import { useDispatch } from 'react-redux'
 import { logout } from '../store/slices/auth'
 import { useSelector } from 'react-redux'
 import { RootState } from '../store/rootReducer'
+import CloudUploadIcon from '@mui/icons-material/CloudUpload'
 
 export interface PRops {
   children?: React.ReactNode
@@ -61,13 +62,13 @@ export const MENU: Menu[] = [
     icon: <ArticleIcon />,
     image: 'https://icons.veryicon.com/png/o/internet--web/prejudice/user-128.png',
   },
-  //   {
-  //     id: 2,
-  //     name: 'Usuarios',
-  //     url: '/usuarios',
-  //     icon: <PersonOutlineIcon />,
-  //     image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZn5213vbBu4Jy1SyE_q_UHKChY_5QQlChJE-Njv7E8je_doPNrVTTJ9QhS3Wc9NpvyGo&usqp=CAU',
-  //   },
+  {
+    id: 2,
+    name: 'Cargar Materiales',
+    url: '/materiales',
+    icon: <CloudUploadIcon style={{ color: 'black' }} />,
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZn5213vbBu4Jy1SyE_q_UHKChY_5QQlChJE-Njv7E8je_doPNrVTTJ9QhS3Wc9NpvyGo&usqp=CAU',
+  },
 ]
 const settings = ['Cerrar sesion']
 

@@ -1,0 +1,16 @@
+.Editor-container {
+    position: relative;
+
+    .Editor-Toolbar {
+        padding: 5px;
+        box-shadow: 0.5px 0.5px 1px 1px #e6e6e4;
+        flex-direction: row;
+    }
+
+    .New-Editor-Toolbar {
+        background: #f3f4f6;
+        border-radius: 8px;
+        padding: 5px;
+        flex-direction: row;
+    }
+}
