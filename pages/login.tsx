@@ -17,17 +17,17 @@ const login = () => {
   const [autenticarUsuario, { loading, data, error }] = useMutation<ResponseLogin, { input: InputLogin }>(LOGIN_USER)
 
   useEffect(() => {
-    if (data?.autenticarUsuario.token) {
-      setMensaje({ mensaje: 'Usuario Autenticado', error: null })
-      localStorage.setItem('token', data.autenticarUsuario.token)
-      dispatch(auth(data))
+    if (data) {
+      if (data?.autenticarUsuario.token) {
+        setMensaje({ mensaje: 'Usuario Autenticado', error: null })
+        localStorage.setItem('token', data.autenticarUsuario.token)
+        dispatch(auth(data))
+      }
+      setTimeout(() => {
+        data?.autenticarUsuario.token ? router.push('/') : setMensaje(undefined)
+      }, 1000)
     }
-    if (error) {
-      setMensaje({ mensaje: '', error })
-    }
-    setTimeout(() => {
-      data?.autenticarUsuario.token ? router.push('/') : setMensaje(undefined)
-    }, 1000)
+    error && setMensaje({ mensaje: '', error })
   }, [data, error])
 
   const onSubmit = useCallback(async (values: any) => {
