@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import LayoutLogin from '../layout/LayoutLogin'
 import FormLogin from '../components/FormsLogin/FormLogin'
-import { LOGIN_USER } from '../graphQL/Mutations/Usuarios'
+import { LOGIN_USER } from '../graphQL/front/Mutations/Usuarios'
 import { InputLogin, ResponseLogin } from '../types/Usuario'
 import { useMutation } from '@apollo/client'
 import { useRouter } from 'next/router'
@@ -29,8 +29,6 @@ const login = () => {
       data?.autenticarUsuario.token ? router.push('/') : setMensaje(undefined)
     }, 1000)
   }, [data, error])
-
-  
 
   const onSubmit = useCallback(async (values: any) => {
     await autenticarUsuario({

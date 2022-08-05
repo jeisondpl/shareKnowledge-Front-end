@@ -3,19 +3,14 @@ import { setContext } from '@apollo/client/link/context'
 import * as fetch from 'cross-fetch'
 
 const httpLink = createHttpLink({
-  // uri: 'http://localhost:4000/',
-  uri: 'https://share-knowledge-back-end-indra-deploy-jeisondiaz.vercel.app/',
+  uri: 'http://localhost:3000/api/graphql',
+  // uri: 'https://share-knowledge-back-end-indra-deploy-jeisondiaz.vercel.app/',
 
   fetch: fetch as any,
 })
 
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem('token')
-
-  // import { useSelector } from 'react-redux'
-  // import { RootState } from '../store/rootReducer'
-  // const state = useSelector((state: RootState) => state) || {}
-
   return {
     headers: {
       ...headers,

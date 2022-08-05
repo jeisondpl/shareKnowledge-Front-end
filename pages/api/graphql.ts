@@ -1,17 +1,11 @@
-// const { ApolloServer } = require('apollo-server')
-
 import { ApolloServer } from 'apollo-server-micro'
-import { typeDefs } from './graphql/db/schem'
-import { resolvers } from './graphql/db/resolver'
+import { typeDefs } from '../../graphQL/back/db/schem'
+import { resolvers } from '../../graphQL/back/db/resolver'
 const cors = require('micro-cors')()
-import conectarDB from './graphql/config/db'
+import conectarDB from '../../graphQL/back/config/db'
+require('dotenv').config({ path: '.env' })
 const jwt = require('jsonwebtoken')
 
-
-
-
-
-require('dotenv').config({ path: '.env' })
 
 // Conectar a la base de datos
 conectarDB()
@@ -25,22 +19,18 @@ const apolloServer = new ApolloServer({
     const token = req.headers['authorization'] || ''
     if (token) {
       try {
-        const usuario = jwt.verify(token.replace('Bearer ', ''), process.env.SECRETA)
-        // console.log(usuario)
         return {
-          usuario,
+          usuario: jwt.verify(token.replace('Bearer ', ''), process.env.SECRETA)
         }
       } catch (error) {
-        console.log('Hubo un error')
+        console.log('Hubo un error al verificar el token')
         console.log(error)
       }
     }
   },
 })
 
-
 const startServer = apolloServer.start()
-
 
 export default cors(async function handler(req: any, res: any) {
 
