@@ -45,7 +45,7 @@ const FormLogin = ({ onSubmit }: Props) => {
             />
             <FormErrorMessage nameField={'password'} error={errors} touched={touched} />
             <div></div>
-            <FormControlLabel control={<Checkbox value='remember' color='primary' />} label='Recuerdar' />
+            <FormControlLabel control={<Checkbox value='remember' color='primary' />} label='Recordar' />
             <Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
               Iniciar sesión
             </Button>
