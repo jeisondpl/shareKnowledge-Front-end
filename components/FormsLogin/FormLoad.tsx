@@ -64,13 +64,13 @@ const FormLoad = ({ children, onSubmit, titleBtn = 'Registrar' }: Props) => {
             <div>{children}</div>
 
             <Button variant='contained' component='label' color='warning'>
-              Upload File
+              Upload Files
               <input type='file' hidden />
             </Button>
             <Button type='submit'  fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
               {titleBtn}
             </Button>
-            
+
           </>
         </Form>
       )}
