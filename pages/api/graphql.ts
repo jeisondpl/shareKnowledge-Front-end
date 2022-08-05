@@ -1,4 +1,6 @@
 import { ApolloServer } from 'apollo-server-micro'
+import { ApolloServerPluginLandingPageGraphQLPlayground } from 'apollo-server-core'
+
 import { typeDefs } from '../../graphQL/back/db/schem'
 import { resolvers } from '../../graphQL/back/db/resolver'
 const cors = require('micro-cors')()
@@ -6,15 +8,15 @@ import conectarDB from '../../graphQL/back/config/db'
 require('dotenv').config({ path: '.env' })
 const jwt = require('jsonwebtoken')
 
-
 // Conectar a la base de datos
 conectarDB()
-
 
 // servidor
 const apolloServer = new ApolloServer({
   typeDefs,
   resolvers,
+  introspection: true,
+  plugins: [ApolloServerPluginLandingPageGraphQLPlayground],
   context: ({ req }) => {
     const token = req.headers['authorization'] || ''
     if (token) {
@@ -28,16 +30,10 @@ const apolloServer = new ApolloServer({
       }
     }
   },
-  introspection: true,
 
 })
 
 const startServer = apolloServer.start()
-
-
-
-
-
 export default cors(async (req: any, res: any) => {
 
   if (req.method === 'OPTIONS') {
