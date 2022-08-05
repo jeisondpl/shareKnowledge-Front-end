@@ -21,7 +21,7 @@ const Index = () => {
           </>
         ) : (
           <Grid item md={4} xs={6} rowSpacing={3}>
-            <p>No tienes permisos para ver esta seccion solicite acceso al contenido de este espacio</p>
+            <p>No tienes permisos al contenido de este espacio</p>
           </Grid>
         )}
       </Grid>
