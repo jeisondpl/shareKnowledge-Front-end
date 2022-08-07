@@ -54,14 +54,14 @@ export const MENU: Menu[] = [
   },
 
   {
-    id: 3,
+    id: 2,
     name: 'Usuarios',
     url: '/usuarios',
     icon: <PersonIcon />,
     image: 'https://icons.veryicon.com/png/o/internet--web/prejudice/user-128.png',
   },
   {
-    id: 2,
+    id: 3,
     name: 'Materiales',
     url: '/materiales',
     icon: <MenuBookIcon />,
@@ -73,6 +73,13 @@ export const MENU: Menu[] = [
     url: '/cursos',
     icon: <SchoolIcon />,
     image: 'https://cdn-icons-png.flaticon.com/512/5885/5885260.png',
+  },
+  {
+    id: 5,
+    name: 'Categoria materiales',
+    url: '/materiales/categoria',
+    icon: <SchoolIcon />,
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNTT6j2b3btiGoSaXxbEJRXXegW6zGQ5VlMsESvKOweTij1LzYI2bRKwSTpsME4QkvLAI&usqp=CAU',
   },
 ]
 const settings = ['Cerrar sesion']
