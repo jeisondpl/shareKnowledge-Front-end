@@ -31,6 +31,7 @@ import PersonIcon from '@mui/icons-material/Person'
 import client from '../config/apollo'
 import MenuBookIcon from '@mui/icons-material/MenuBook'
 import SchoolIcon from '@mui/icons-material/School'
+import CategoryIcon from '@mui/icons-material/Category'
 import color from '../Themes/Color'
 export interface PRops {
   children?: React.ReactNode
@@ -78,7 +79,7 @@ export const MENU: Menu[] = [
     id: 5,
     name: 'Categoria materiales',
     url: '/materiales/categoria',
-    icon: <SchoolIcon />,
+    icon: <CategoryIcon />,
     image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNTT6j2b3btiGoSaXxbEJRXXegW6zGQ5VlMsESvKOweTij1LzYI2bRKwSTpsME4QkvLAI&usqp=CAU',
   },
 ]

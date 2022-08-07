@@ -1,28 +1,18 @@
-import React, { useState, useCallback } from 'react'
-import SpEditorControls from '../../components/SpEditorControls'
+import React, { useCallback } from 'react'
 import Layout from '../../layout/Layout'
-import createResizeablePlugin from '@draft-js-plugins/resizeable'
-import createImagePlugin from '@draft-js-plugins/image'
-import Editor, { composeDecorators } from '@draft-js-plugins/editor'
 import FormLoad from '../../components/Forms/FormLoadMaterial'
-import { EditorState, RichUtils, ContentState, convertToRaw, Modifier, AtomicBlockUtils } from 'draft-js'
 import { Box, Card, Grid, Button, DialogActions } from '@mui/material'
 import { useRouter } from 'next/router'
 import SaveIcon from '@mui/icons-material/Save'
 import CancelIcon from '@mui/icons-material/Cancel'
 import stylesEditor from '../../styles/editor.module.scss'
 import stylesForms from '../../styles/forms.module.scss'
-import SpUploadFile from '../../components/SpUploadFile'
 
 const NuevoCurso = () => {
   const router = useRouter()
-  const resizeablePlugin = createResizeablePlugin()
-  const decorator = composeDecorators(resizeablePlugin.decorator)
-  const imagePlugin = createImagePlugin({ decorator })
-  const plugins = [resizeablePlugin, imagePlugin]
-  const [editorState, setEditorState] = useState<EditorState>(EditorState.createEmpty())
 
   const onSubmit = useCallback(async (values: any) => {
+    console.log(values)
     router.push('/materiales')
   }, [])
 
@@ -35,36 +25,7 @@ const NuevoCurso = () => {
           </Box>
           <div className={stylesEditor.editorContainer}>
             <Card className={stylesForms.card}>
-              <FormLoad onSubmit={onSubmit} onCancel={() => {}} titleBtn={'Guardar'}>
-                <div className={stylesForms.textArea}>
-                  <Editor
-                    editorState={editorState}
-                    handleKeyCommand={() => {}}
-                    handleBeforeInput={() => {}}
-                    handlePastedText={() => {}}
-                    onChange={() => {}}
-                    onTab={() => {}}
-                    spellCheck={true}
-                    autoCorrect='true'
-                    placeholder={'Descripcion del curso'}
-                    readOnly={false}
-                    blockRendererFn={() => {}}
-                    plugins={plugins}
-                  />
-                </div>
-                <div className={stylesForms.controls}>
-                  <SpEditorControls
-                    currentCount={10}
-                    toggleBlockType={() => {}}
-                    toggleInlineStyle={() => {}}
-                    handleSpeechText={() => {}}
-                    MaxLenght={2000}
-                    isNewVersion={false}
-                    readOnly={false}
-                  />
-                </div>
-                <SpUploadFile deleteFile={() => {}} files={[]} handleFile={() => {}} multiple={false} placeholder='Haz click para seleccionar el archivo' validateSize={false} />
-              </FormLoad>
+              <FormLoad onSubmit={onSubmit} onCancel={() => {}} titleBtn={'Guardar'} />
             </Card>
           </div>
         </Grid>
@@ -81,9 +42,5 @@ const NuevoCurso = () => {
       </Grid>
     </Layout>
   )
-}
-
-{
-  /* <SpEditor readOnly={true} handleChange={(e: any) => {}} initialText={'hola'} /> */
 }
 export default NuevoCurso

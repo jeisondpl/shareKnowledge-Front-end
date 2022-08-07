@@ -52,10 +52,10 @@ const Cursos = () => {
       <>{error && <p>Error: {error.message}</p>}</>
       <SpTable name={'Categoria materiales'} rows={data ? data.obtenerTodosUsuarios : []} onEditOronDelete={onEditOronDelete}>
         <DialogActions>
-          <Button type='submit' variant='contained' color='success' endIcon={<AddBoxIcon />} onClick={() => router.push('/cursos/nuevo')}>
+          <Button type='submit' variant='contained' color='success' endIcon={<AddBoxIcon />} onClick={() => {}}>
             Nuevo
           </Button>
-          <Button type='submit' variant='contained' color='primary' endIcon={<VisibilityIcon />} onClick={() => router.push('/cursos/detalle')}>
+          <Button type='submit' variant='contained' color='primary' endIcon={<VisibilityIcon />} onClick={() => {}}>
             detalle
           </Button>
         </DialogActions>
