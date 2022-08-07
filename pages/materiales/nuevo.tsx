@@ -8,7 +8,7 @@ import CancelIcon from '@mui/icons-material/Cancel'
 import stylesEditor from '../../styles/editor.module.scss'
 import stylesForms from '../../styles/forms.module.scss'
 
-const nuevomaterial = () => {
+const Nuevomaterial = () => {
   const router = useRouter()
 
   const onSubmit = useCallback(async (values: any) => {
@@ -46,4 +46,4 @@ const nuevomaterial = () => {
 {
   /* <SpEditor readOnly={true} handleChange={(e: any) => {}} initialText={'hola'} /> */
 }
-export default nuevomaterial
+export default Nuevomaterial

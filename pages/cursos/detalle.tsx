@@ -1,13 +1,11 @@
 import { Box, Button, DialogActions, Grid } from '@mui/material'
 import React from 'react'
 import Layout from '../../layout/Layout'
-import VisibilityIcon from '@mui/icons-material/Visibility'
 import { useRouter } from 'next/router'
 import CancelIcon from '@mui/icons-material/Cancel'
 
-const detalle = () => {
+const Detalle = () => {
   const router = useRouter()
-
   return (
     <Layout>
       <Grid container spacing={2}>
@@ -28,4 +26,4 @@ const detalle = () => {
   )
 }
 
-export default detalle
+export default Detalle
