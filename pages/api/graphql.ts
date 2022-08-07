@@ -1,20 +1,24 @@
 import { ApolloServer } from 'apollo-server-micro'
 import { ApolloServerPluginLandingPageGraphQLPlayground } from 'apollo-server-core'
-
-import { typeDefs } from '../../graphQL/back/db/schem'
-import { resolvers } from '../../graphQL/back/db/resolver'
-const cors = require('micro-cors')()
-import conectarDB from '../../graphQL/back/config/db'
 require('dotenv').config({ path: '.env' })
+const cors = require('micro-cors')()
 const jwt = require('jsonwebtoken')
+import { schemaUsuarios } from '../../graphQL/back/db/schemas/schemaUsuarios'
+import { schemaMaterial } from '../../graphQL/back/db/schemas/schemaMaterial';
+import { resolverUsuarios } from '../../graphQL/back/db/resolvers/resolverUsuarios'
+import { resolverMaterial } from '../../graphQL/back/db/resolvers/resolverMaterial';
+import { schemasCategoriaMaterial } from '../../graphQL/back/db/schemas/schemaCategoriaMaterial';
+import { resolverCategoriaMaterial } from '../../graphQL/back/db/resolvers/resolverCategoriaMaterial';
+import conectarDB from '../../graphQL/back/config/db'
+// import { usuario } from '../../graphQL/back/types/usuarios';
 
 // Conectar a la base de datos
 conectarDB()
 
 // servidor
 const apolloServer = new ApolloServer({
-  typeDefs,
-  resolvers,
+  typeDefs: [schemaUsuarios, schemaMaterial, schemasCategoriaMaterial],
+  resolvers: [resolverUsuarios, resolverMaterial, resolverCategoriaMaterial],
   introspection: true,
   plugins: [ApolloServerPluginLandingPageGraphQLPlayground],
   context: ({ req }) => {
@@ -35,7 +39,6 @@ const apolloServer = new ApolloServer({
 
 const startServer = apolloServer.start()
 export default cors(async (req: any, res: any) => {
-
   if (req.method === 'OPTIONS') {
     res.end()
     return false

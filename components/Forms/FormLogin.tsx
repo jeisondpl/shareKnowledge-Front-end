@@ -1,8 +1,8 @@
 import React, { memo } from 'react'
 import { Formik, Form } from 'formik'
 import { Button, Checkbox, FormControlLabel, TextField } from '@mui/material'
-import FormErrorMessage from './FormErrorMessage'
-import { SchemaLogin, InitialValueLogin } from './Schema'
+import FormErrorMessage from './FormMessageError'
+import { SchemaLogin, InitialValueLogin } from './schema/SchemaLogin'
 import { InputLogin } from '../../types/Usuario'
 
 interface Props {
@@ -45,7 +45,7 @@ const FormLogin = ({ onSubmit }: Props) => {
             />
             <FormErrorMessage nameField={'password'} error={errors} touched={touched} />
             <div></div>
-            <FormControlLabel control={<Checkbox value='remember' color='primary' />} label='Recordarr' />
+            <FormControlLabel control={<Checkbox value='remember' color='primary' />} label='Recordar' />
             <Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
               Iniciar sesión
             </Button>

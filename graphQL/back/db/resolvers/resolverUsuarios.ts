@@ -1,13 +1,10 @@
-
-const Usuario = require('../models/Usuario')
+import Usuario from '../../models/Usuario'
+import { usuario } from '../../types/usuarios'
 const bcryptjs = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 require('dotenv').config({ path: '.env' })
 
 
-interface usuario {
-  id: string, email: string, nombre: string, apellido: string, rol: string
-}
 
 interface PropTokens {
   usuario: usuario
@@ -29,10 +26,8 @@ const crearToken = ({ usuario, secreta, expiresIn }: PropTokens) => {
 }
 
 
-
-
-// Resolvers
-export const resolvers = {
+// Resolvers de Usuario
+export const resolverUsuarios = {
   Query: {
     obtenerUsuario: async (_: any, { }, ctx: any) => {
       return ctx.usuario
@@ -117,5 +112,8 @@ export const resolvers = {
       return usuario
     },
   },
+
+
 }
+
 

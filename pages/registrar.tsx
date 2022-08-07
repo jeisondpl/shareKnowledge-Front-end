@@ -1,44 +1,38 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useMutation } from '@apollo/client'
 import LayoutLogin from '../layout/LayoutLogin'
-import FormRegister from '../components/FormsLogin/FormRegister'
+import FormRegister from '../components/Forms/FormRegister'
 import { CREATE_USER } from '../graphQL/front/Mutations/Usuarios'
-import LoadinError from '../components/LoadinError'
-import { respMesage } from '../types/Commons'
 import { InputRegister } from '../types/Usuario'
 import { useRouter } from 'next/router'
+import useAlert from '../components/Hooks/useAlert'
+import SpAlerta from '../components/SpAlert'
 
 const Registrar = () => {
   const router = useRouter()
   const [nuevoUsuario, { loading, data, error }] = useMutation<{ nuevoUsuario: InputRegister }, { input: InputRegister }>(CREATE_USER)
-  const [mensaje, setMensaje] = useState<respMesage>()
+  const { onSuccess, onError, mensaje } = useAlert()
 
   useEffect(() => {
-    let isCreated = false
     if (data) {
-      setMensaje({ mensaje: 'Usuario creado correctamente', error: null })
-      isCreated = true
+      onSuccess('Usuario registrado')
+      setTimeout(() => {
+        router.push('/login')
+      }, 900)
     }
-    if (error) {
-      setMensaje({ mensaje: '', error })
-    }
-    setTimeout(() => {
-      isCreated ? router.push('/login') : setMensaje(undefined)
-    }, 3000)
+    error && onError(error.message)
   }, [data, error])
 
-  const onSubmit = useCallback(async (values: InputRegister) => {
+  const onSubmit = useCallback(async (input: InputRegister) => {
     await nuevoUsuario({
-      variables: {
-        input: values,
-      },
+      variables: { input },
     })
   }, [])
 
   return (
     <LayoutLogin>
-      <LoadinError loading={loading} mensaje={mensaje} />
       <FormRegister onSubmit={onSubmit} />
+      <SpAlerta success={mensaje.success} loading={loading} error={mensaje.error} />
     </LayoutLogin>
   )
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles'
+import { styled, Theme, CSSObject } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import MuiDrawer from '@mui/material/Drawer'
 import CssBaseline from '@mui/material/CssBaseline'
@@ -11,29 +11,27 @@ import Divider from '@mui/material/Divider'
 import IconButton from '@mui/material/IconButton'
 import MenuIcon from '@mui/icons-material/Menu'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
-import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
-import ArticleIcon from '@mui/icons-material/Article'
 import Link from 'next/link'
-import { grey, blue } from '@mui/material/colors'
+import { grey } from '@mui/material/colors'
 import HomeIcon from '@mui/icons-material/Home'
 import { useRouter } from 'next/router'
 import AdbIcon from '@mui/icons-material/Adb'
 import Button from '@mui/material/Button'
 import { CardMedia, ListItemText, Menu, MenuItem, Tooltip } from '@mui/material'
 import Avatar from '@mui/material/Avatar'
-// import { useQuery } from '@apollo/client'
-// import { GET_FIND_BY_ID } from '../graphQL/Querys/Usuarios'
-// import { InputRegister, UsuariosDataFindById } from '../types/Usuario'
 import { deepPurple } from '@mui/material/colors'
 import { useDispatch } from 'react-redux'
 import { logout } from '../store/slices/auth'
 import { useSelector } from 'react-redux'
 import { RootState } from '../store/rootReducer'
-import CloudUploadIcon from '@mui/icons-material/CloudUpload'
-
+import PersonIcon from '@mui/icons-material/Person'
+import client from '../config/apollo'
+import MenuBookIcon from '@mui/icons-material/MenuBook'
+import SchoolIcon from '@mui/icons-material/School'
+import color from '../Themes/Color'
 export interface PRops {
   children?: React.ReactNode
 }
@@ -59,39 +57,27 @@ export const MENU: Menu[] = [
     id: 3,
     name: 'Usuarios',
     url: '/usuarios',
-    icon: <ArticleIcon />,
+    icon: <PersonIcon />,
     image: 'https://icons.veryicon.com/png/o/internet--web/prejudice/user-128.png',
   },
   {
     id: 2,
-    name: 'Cargar Materiales',
+    name: 'Materiales',
     url: '/materiales',
-    icon: <CloudUploadIcon style={{ color: 'black' }} />,
-    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZn5213vbBu4Jy1SyE_q_UHKChY_5QQlChJE-Njv7E8je_doPNrVTTJ9QhS3Wc9NpvyGo&usqp=CAU',
+    icon: <MenuBookIcon />,
+    image: 'https://cdn-icons-png.flaticon.com/512/46/46862.png',
+  },
+  {
+    id: 4,
+    name: 'Cursos',
+    url: '/cursos',
+    icon: <SchoolIcon />,
+    image: 'https://cdn-icons-png.flaticon.com/512/5885/5885260.png',
   },
 ]
 const settings = ['Cerrar sesion']
 
 const drawerWidth = 240
-
-const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
-  open?: boolean
-}>(({ theme, open }) => ({
-  flexGrow: 1,
-  padding: theme.spacing(3),
-  transition: theme.transitions.create('margin', {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  marginLeft: `-${drawerWidth}px`,
-  ...(open && {
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-    marginLeft: 0,
-  }),
-}))
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean
@@ -170,8 +156,6 @@ const Sidebar = ({ children }: PRops) => {
 
   const router = useRouter()
 
-  const theme = useTheme()
-
   const handleDrawerOpen = () => {
     setOpen(true)
   }
@@ -193,6 +177,7 @@ const Sidebar = ({ children }: PRops) => {
       dispatch(logout())
       localStorage.removeItem('token')
       router.push('/login')
+      client.clearStore()
     }
   }
 
@@ -319,7 +304,7 @@ const Sidebar = ({ children }: PRops) => {
         </List>
         <Divider />
       </Drawer>
-      <Box component='main' sx={{ flexGrow: 1, p: 3 }}>
+      <Box component='main' sx={{ flexGrow: 1, p: 3, background: color.backgroupd }}>
         <DrawerHeader />
         {children}
       </Box>
@@ -328,19 +313,3 @@ const Sidebar = ({ children }: PRops) => {
 }
 
 export default Sidebar
-
-{
-  /* <ListItemButton>
-<span
-  style={{
-    background: router.pathname === item.url ? blue[800] : '',
-    width: '100%',
-    borderRadius: 5,
-    padding: 4,
-    display: 'flex',
-    alignItems: 'center',
-  }}
-                <ListItemIcon style={{ color: 'white', margin: 10, display: 'flex', justifyContent: 'center' }}>{item.icon}</ListItemIcon>
-
-> */
-}

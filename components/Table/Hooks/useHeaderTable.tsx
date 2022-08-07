@@ -2,22 +2,13 @@ import { proccessTable } from '../../Types/typeTable'
 import { dataColumns as Dc } from '../Columns'
 
 const useHeaderTable = (name: proccessTable) => {
-  let header: any[] = []
-
   switch (name) {
-    case 'Productos':
-      header = [Dc.nombre, Dc.precio, Dc.existencia, Dc.creado, Dc.acciones]
-      break
+    case 'Material':
+      return [Dc.titulo, Dc.categoria, Dc.descripcion, Dc.acciones]
     case 'Usuarios':
-      header = [Dc.nombre, Dc.apellido, Dc.email, Dc.rol, Dc.acciones]
-      break
+      return [Dc.nombre, Dc.apellido, Dc.email, Dc.rol, Dc.acciones]
     default:
-      // header = columns
-      break
-  }
-
-  return {
-    header,
+      return []
   }
 }
 

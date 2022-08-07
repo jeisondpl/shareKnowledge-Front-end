@@ -32,11 +32,9 @@ export default function SpCard({ title, image, url }: Props) {
               </Typography>
             </CardContent>
             <Box sx={{ display: 'flex', alignItems: 'center', pl: 1, pb: 1 }}>
-              {/* <IconButton aria-label='previous'>{theme.direction === 'rtl' ? <SkipNextIcon /> : <SkipPreviousIcon />}</IconButton> */}
               <IconButton aria-label='play/pause'>
                 <VisibilityIcon />
               </IconButton>
-              {/* <IconButton aria-label='next'>{theme.direction === 'rtl' ? <SkipPreviousIcon /> : <SkipNextIcon />}</IconButton> */}
             </Box>
           </Box>
 
@@ -45,6 +43,8 @@ export default function SpCard({ title, image, url }: Props) {
             style={{
               width: 'auto',
               maxHeight: '200px',
+              paddingBottom: '20px',
+              opacity: '.2',
             }}
             image={image}
             alt='Live from space album cover'

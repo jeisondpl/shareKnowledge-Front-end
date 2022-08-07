@@ -1,18 +1,40 @@
-import { Alert, AlertColor } from '@mui/material'
-import React from 'react'
-import { color } from '../Themes/Color'
+import { Alert, Box } from '@mui/material'
+import SpLoading from './SpLoading'
+import color from '../Themes/Color'
 
+// export type AlertColor = 'success' | 'info' | 'warning' | 'error';
 interface Props {
-  type?: AlertColor | undefined
-  children: JSX.Element | JSX.Element[]
+  loading?: boolean
+  success?: string
+  error?: string
 }
 
-const SpAlert = ({ children, type = 'error' }: Props) => {
+const SpAlert = ({ success, error, loading }: Props) => {
+  const style = { borderLeft: `4px solid ${success ? color.success : color.error}` }
+
   return (
-    <Alert severity={type} style={{ borderLeft: `4px solid ${type !== 'error' ? color.verde : color.rojo}` }}>
-      {children}
-    </Alert>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      {success && (
+        <Alert severity='success' style={style}>
+          {success}
+        </Alert>
+      )}
+      {error && (
+        <Alert severity='error' style={style}>
+          {error}
+        </Alert>
+      )}
+      {loading && <SpLoading loading={loading} />}
+    </Box>
   )
 }
 
 export default SpAlert
+//

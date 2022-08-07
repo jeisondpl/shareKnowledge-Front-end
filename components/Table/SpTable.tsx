@@ -8,9 +8,9 @@ import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import { proccessTable } from '../Types/typeTable'
 import useHeaderTable from './Hooks/useHeaderTable'
-import { Box, IconButton, TableFooter, TablePagination } from '@mui/material'
+import { Box, IconButton } from '@mui/material'
 import Actions from './Actions'
-import { useState } from 'react'
+import { useState, memo } from 'react'
 import FirstPageIcon from '@mui/icons-material/FirstPage'
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft'
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight'
@@ -85,7 +85,7 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
   )
 }
 const SpTable = ({ name = 'Usuarios', rows, children, onEditOronDelete = () => {} }: Props) => {
-  const { header } = useHeaderTable(name)
+  const header = useHeaderTable(name)
 
   switch (name) {
     case 'Usuarios':
@@ -98,6 +98,14 @@ const SpTable = ({ name = 'Usuarios', rows, children, onEditOronDelete = () => {
         })
         .filter((row: any) => row.rol !== 'ADMINISTRADOR')
       break
+    case 'Material':
+      rows = rows.map((row: any) => {
+        return {
+          ...row,
+          acciones: <Actions onEditOronDelete={onEditOronDelete} id={row.id} />,
+        }
+      })
+      break
     default:
       // header = columns
       break
@@ -106,25 +114,15 @@ const SpTable = ({ name = 'Usuarios', rows, children, onEditOronDelete = () => {
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
 
-  // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0
-
-  const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
-    setPage(newPage)
-  }
-
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setRowsPerPage(parseInt(event.target.value, 10))
-    setPage(0)
-  }
-
   return (
     <>
       <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignContent: 'center' }}>
         <Box sx={{ flex: 'auto' }}>
-          <h2>{name}</h2>
+          <h2>
+            {name} : {rows.length}
+          </h2>
         </Box>
-        <Box sx={{ display: 'flex', width: '5rem', justifyContent: 'center' }}>{children}</Box>
+        <Box sx={{ justifyContent: 'center' }}>{children}</Box>
       </Box>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 700 }} aria-label='customized table'>
@@ -144,31 +142,9 @@ const SpTable = ({ name = 'Usuarios', rows, children, onEditOronDelete = () => {
               </StyledTableRow>
             ))}
           </TableBody>
-          {/* <TableFooter>
-            <TableRow>
-              <TableCell colSpan={header.length}>
-                <TablePagination
-                  rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-                  colSpan={3}
-                  count={rows.length}
-                  rowsPerPage={rowsPerPage}
-                  page={page}
-                  SelectProps={{
-                    inputProps: {
-                      'aria-label': 'rows per page',
-                    },
-                    native: true,
-                  }}
-                  onPageChange={handleChangePage}
-                  onRowsPerPageChange={handleChangeRowsPerPage}
-                  ActionsComponent={TablePaginationActions}
-                />
-              </TableCell>
-            </TableRow>
-          </TableFooter> */}
         </Table>
       </TableContainer>
     </>
   )
 }
-export default SpTable
+export default memo(SpTable)

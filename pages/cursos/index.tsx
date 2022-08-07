@@ -1,18 +1,20 @@
 import React, { useCallback, useState } from 'react'
-import Layout from '../layout/Layout'
+import SpLoading from '../../components/SpLoading'
+import Layout from '../../layout/Layout'
 import { useQuery } from '@apollo/client'
-import SpTable from '../components/Table/SpTable'
-import { GET_ALL } from '../graphQL/front/Querys/Usuarios'
-import { InputRegister, UsuariosDataAll } from '../types/Usuario'
-import { IconButton } from '@mui/material'
+import SpTable from '../../components/Table/SpTable'
+import { GET_ALL } from '../../graphQL/front/Querys/Usuarios'
+import { InputRegister, UsuariosDataAll } from '../../types/Usuario'
+import { Button, DialogActions } from '@mui/material'
 import { useRouter } from 'next/router'
 import AddBoxIcon from '@mui/icons-material/AddBox'
-import SpModalBasic from '../components/SpModalBasic'
-import FormRegister from '../components/Forms/FormRegister'
-import SpDialog from '../components/SpDialog'
-import SpAlerta from '../components/SpAlert'
+import SpModalBasic from '../../components/SpModalBasic'
+import FormRegister from '../../components/Forms/FormRegister'
+import SpDialog from '../../components/SpDialog'
+import VisibilityIcon from '@mui/icons-material/Visibility'
+import detalle from './detalle'
 
-const Usuarios = () => {
+const Cursos = () => {
   const router = useRouter()
   const { data, loading, error } = useQuery<UsuariosDataAll, InputRegister>(GET_ALL)
   const [openEdit, setOpenEdit] = useState(false)
@@ -47,21 +49,24 @@ const Usuarios = () => {
 
   return (
     <Layout>
-      <SpAlerta message={error && error.message} loading={loading} />
-
-      <SpTable name={'Usuarios'} rows={data ? data.obtenerTodosUsuarios : []} onEditOronDelete={onEditOronDelete}>
-        <IconButton aria-label='delete' size='large' onClick={() => router.push('/')}>
-          <AddBoxIcon fontSize='inherit' color='success' />
-        </IconButton>
+      <SpLoading loading={loading} />
+      <>{error && <p>Error: {error.message}</p>}</>
+      <SpTable name={'Cursos'} rows={data ? data.obtenerTodosUsuarios : []} onEditOronDelete={onEditOronDelete}>
+        <DialogActions>
+          <Button type='submit' variant='contained' color='success' endIcon={<AddBoxIcon />} onClick={() => router.push('/cursos/nuevo')}>
+            Nuevo
+          </Button>
+          <Button type='submit' variant='contained' color='primary' endIcon={<VisibilityIcon />} onClick={() => router.push('/cursos/detalle')}>
+            detalle
+          </Button>
+        </DialogActions>
       </SpTable>
-
       <SpModalBasic open={openEdit} title={'Editar'}>
         <FormRegister onSubmit={onSubmit} titleBtn='Editar' />
       </SpModalBasic>
-
       <SpDialog open={openDelete} title={'Eliminar'} description={'¿Desea eliminar este registro?'} onCancel={() => setOpenDelete(false)} onSubmit={handleDelete} />
     </Layout>
   )
 }
 
-export default Usuarios
+export default Cursos

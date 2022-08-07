@@ -1,7 +1,7 @@
 import { gql } from 'apollo-server-micro'
 
 // Schema
-export const typeDefs = gql`
+export const schemaUsuarios = gql`
 type Usuario {
   id: ID
   nombre: String

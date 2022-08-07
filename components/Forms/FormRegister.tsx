@@ -1,8 +1,8 @@
 import React, { memo } from 'react'
 import { Formik, Form } from 'formik'
 import { Button, TextField } from '@mui/material'
-import FormErrorMessage from './FormErrorMessage'
-import { InitialValueRegister, SchemaRegister } from './Schema'
+import FormErrorMessage from './FormMessageError'
+import { InitialValueRegister, SchemaRegister } from './schema/SchemaRegister'
 import { InputRegister } from '../../types/Usuario'
 
 interface Props {
@@ -10,7 +10,7 @@ interface Props {
   titleBtn?: string
 }
 
-const FormRegister = ({ onSubmit,titleBtn="Registrar" }: Props) => {
+const FormRegister = ({ onSubmit, titleBtn = 'Registrar' }: Props) => {
   return (
     <Formik
       enableReinitialize={false}
@@ -22,7 +22,6 @@ const FormRegister = ({ onSubmit,titleBtn="Registrar" }: Props) => {
           rol: 'VERIFICACION',
         })
       }
-     
     >
       {({ values, errors, handleChange, handleBlur, touched, handleSubmit }) => (
         <Form
@@ -52,7 +51,7 @@ const FormRegister = ({ onSubmit,titleBtn="Registrar" }: Props) => {
             <FormErrorMessage nameField={'password'} error={errors} touched={touched} />
             <div></div>
             <Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
-               {titleBtn}
+              {titleBtn}
             </Button>
           </>
         </Form>

@@ -13,6 +13,7 @@ interface format {
   email: columns
   creado: columns
   rol: columns
+  titulo: columns
 }
 
 export const dataColumns: format = {
@@ -23,6 +24,10 @@ export const dataColumns: format = {
   nombre: {
     field: 'Nombre',
     value: 'nombre',
+  },
+  titulo: {
+    field: 'Titulo',
+    value: 'titulo',
   },
   existencia: {
     field: 'Existencia',

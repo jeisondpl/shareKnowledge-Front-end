@@ -1,33 +1,30 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import LayoutLogin from '../layout/LayoutLogin'
-import FormLogin from '../components/FormsLogin/FormLogin'
-import { LOGIN_USER } from '../graphQL/front/Mutations/Usuarios'
-import { InputLogin, ResponseLogin } from '../types/Usuario'
+import React, { useCallback, useEffect } from 'react'
 import { useMutation } from '@apollo/client'
 import { useRouter } from 'next/router'
-import { respMesage } from '../types/Commons'
-import LoadinError from '../components/LoadinError'
 import { useDispatch } from 'react-redux'
+import LayoutLogin from '../layout/LayoutLogin'
+import { LOGIN_USER } from '../graphQL/front/Mutations/Usuarios'
+import { InputLogin, ResponseLogin } from '../types/Usuario'
 import { auth } from '../store/slices/auth'
+import { FormLogin, SpAlert } from '../components'
+import { useAlert } from '../components/Hooks'
 
 const Login = () => {
   const router = useRouter()
   const dispatch = useDispatch()
-  const [mensaje, setMensaje] = useState<respMesage>()
-  const [autenticarUsuario, { loading, data, error }] = useMutation<ResponseLogin, { input: InputLogin }>(LOGIN_USER)
+  const [autenticarUsuario, { loading, data, error }] = useMutation<ResponseLogin, { input: InputLogin }>(LOGIN_USER, { fetchPolicy: 'network-only' })
+  const { onSuccess, onError, mensaje } = useAlert()
 
   useEffect(() => {
-    if (data) {
-      if (data?.autenticarUsuario.token) {
-        setMensaje({ mensaje: 'Usuario Autenticado', error: null })
-        localStorage.setItem('token', data.autenticarUsuario.token)
-        dispatch(auth(data))
-      }
+    if (data && data?.autenticarUsuario.token) {
+      onSuccess('Usuario autenticado')
+      localStorage.setItem('token', data.autenticarUsuario.token)
+      dispatch(auth(data))
       setTimeout(() => {
-        data?.autenticarUsuario.token ? router.push('/') : setMensaje(undefined)
-      }, 1000)
+        router.push('/')
+      }, 800)
     }
-    error && setMensaje({ mensaje: '', error })
+    error && onError(error.message)
   }, [data, error])
 
   const onSubmit = useCallback(async (values: any) => {
@@ -40,8 +37,8 @@ const Login = () => {
 
   return (
     <LayoutLogin>
-      <LoadinError loading={loading} mensaje={mensaje} />
       <FormLogin onSubmit={onSubmit} />
+      <SpAlert success={mensaje.success} loading={loading} error={mensaje.error} />
     </LayoutLogin>
   )
 }
