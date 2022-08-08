@@ -49,6 +49,7 @@ const Cursos = () => {
             ))}
 
           <Grid item xs={12}>
+            <Divider />
             <h2>Todos los cursos</h2>
           </Grid>
           {data &&

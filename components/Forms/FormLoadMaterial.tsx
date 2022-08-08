@@ -15,7 +15,7 @@ interface Props {
   onSubmit: (values: InputRegister) => void
   onCancel: () => void
   titleBtn?: string
-  type: 'categoria' | 'material'
+  type?: 'categoria' | 'material'
 }
 
 const FormLoad = ({ onSubmit, onCancel, titleBtn = 'Registrar', type = 'material' }: Props) => {
