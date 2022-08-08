@@ -19,7 +19,7 @@ const Nuevomaterial = () => {
       <Grid container spacing={2}>
         <Grid item xs={8}>
           <Box sx={{ flex: 'auto' }}>
-            <h2>Crear Material</h2>
+            <h2>Crear Curso</h2>
           </Box>
           <Card sx={{ padding: '40px' }}>
             <FormLoadMaterial onSubmit={onSubmit} onCancel={() => {}} titleBtn={'Guardar'} type={'material'} />

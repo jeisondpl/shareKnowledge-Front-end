@@ -4,7 +4,7 @@ import Layout from '../layout/Layout'
 import { useSelector } from 'react-redux'
 import { RootState } from '../store/rootReducer'
 import SpCard from '../components/SpCard'
-import { MENU } from '../components/Sidebar'
+import { MENU } from '../components/SpSidebar'
 import { blue } from '@mui/material/colors'
 import { useRouter } from 'next/router'
 

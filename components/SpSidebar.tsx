@@ -155,18 +155,18 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 }))
 
-const Sidebar = ({ children }: PRops) => {
+const SpSidebar = ({ children }: PRops) => {
   const router = useRouter()
   const token = useSelector((state: RootState) => state.auth.token)
   const [view, setView] = useState(true)
 
-  useEffect(() => {
-    if (!token) {
-      router.push('/login')
-    } else {
-      setView(false)
-    }
-  }, [router])
+  // useEffect(() => {
+  //   if (!token) {
+  //     router.push('/login')
+  //   } else {
+  //     setView(false)
+  //   }
+  // }, [router])
 
   const user = useSelector((state: RootState) => state.auth.user)
   const dispatch = useDispatch()
@@ -203,7 +203,7 @@ const Sidebar = ({ children }: PRops) => {
   const handleUri = (url: string) => {
     router.push(url)
   }
-  if (view) return <SpAlert loading={view} />
+  // if (view) return <SpAlert loading={view} />
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -333,4 +333,4 @@ const Sidebar = ({ children }: PRops) => {
   )
 }
 
-export default Sidebar
+export default SpSidebar

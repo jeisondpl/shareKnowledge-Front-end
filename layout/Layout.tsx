@@ -1,6 +1,6 @@
 import { Grid } from '@mui/material'
 import React from 'react'
-import Sidebar from '../components/Sidebar'
+import Sidebar from '../components/SpSidebar'
 
 interface Props {
   children: JSX.Element | JSX.Element[]
