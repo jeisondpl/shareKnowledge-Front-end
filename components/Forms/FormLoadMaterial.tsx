@@ -4,7 +4,6 @@ import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField
 import { InitialValueRegister, SchemaRegister } from './schema/SchemaRegister'
 import { InputRegister } from '../../types/Usuario'
 import TextareaAutosize from '@mui/material/TextareaAutosize'
-import stylesForms from '../../styles/forms.module.scss'
 import SpUploadFile from '../../components/SpUploadFile'
 
 interface Props {
@@ -31,7 +30,7 @@ const FormLoad = ({ onSubmit, onCancel, titleBtn = 'Registrar' }: Props) => {
         })
       }
     >
-      {({ values, errors, handleChange, handleBlur, touched, handleSubmit }) => (
+      {({ values, handleChange, handleBlur, touched, handleSubmit }) => (
         <Form
           onSubmit={(e) => {
             e.preventDefault()
@@ -59,7 +58,27 @@ const FormLoad = ({ onSubmit, onCancel, titleBtn = 'Registrar' }: Props) => {
               value={values.nombre}
             />
             <FormControl fullWidth>
-              <TextareaAutosize className={stylesForms.textArea} minRows={12} aria-label='maximum height' placeholder='Descripcion del material' />
+              <TextareaAutosize
+                style={{
+                  width: '100%',
+                  height: '200px',
+                  borderRadius: '10px',
+                  resize: 'none',
+                  fontSize: '1rem',
+                  paddingLeft: '10px',
+                  paddingRight: '10px',
+                  maxWidth: '100%',
+                  overflow: 'auto',
+                  outline: 'none',
+                  boxShadow: 'none',
+                  border: '1px solid #C4C4C4',
+                  padding: '10px',
+                  marginTop: '5px',
+                }}
+                minRows={12}
+                aria-label='maximum height'
+                placeholder='Descripcion del material'
+              />
             </FormControl>
             <SpUploadFile deleteFile={() => {}} files={[]} handleFile={() => {}} multiple={false} placeholder='Haz click para seleccionar el archivo' validateSize={false} />
           </>
