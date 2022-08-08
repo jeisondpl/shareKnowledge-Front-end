@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 import { styled, Theme, CSSObject } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import MuiDrawer from '@mui/material/Drawer'
@@ -15,9 +16,8 @@ import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import Link from 'next/link'
-import { grey } from '@mui/material/colors'
+import { blue, grey } from '@mui/material/colors'
 import HomeIcon from '@mui/icons-material/Home'
-import { useRouter } from 'next/router'
 import AdbIcon from '@mui/icons-material/Adb'
 import Button from '@mui/material/Button'
 import { CardMedia, ListItemText, Menu, MenuItem, Tooltip } from '@mui/material'
@@ -33,6 +33,7 @@ import MenuBookIcon from '@mui/icons-material/MenuBook'
 import SchoolIcon from '@mui/icons-material/School'
 import CategoryIcon from '@mui/icons-material/Category'
 import color from '../Themes/Color'
+import SpAlert from './SpAlert'
 export interface PRops {
   children?: React.ReactNode
 }
@@ -155,14 +156,24 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 }))
 
 const Sidebar = ({ children }: PRops) => {
+  const router = useRouter()
+  const token = useSelector((state: RootState) => state.auth.token)
+  const [view, setView] = useState(true)
+
+  useEffect(() => {
+    if (!token) {
+      router.push('/login')
+    } else {
+      setView(false)
+    }
+  }, [router])
+
   const user = useSelector((state: RootState) => state.auth.user)
   const dispatch = useDispatch()
 
   const [open, setOpen] = React.useState(false)
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null)
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null)
-
-  const router = useRouter()
 
   const handleDrawerOpen = () => {
     setOpen(true)
@@ -192,6 +203,8 @@ const Sidebar = ({ children }: PRops) => {
   const handleUri = (url: string) => {
     router.push(url)
   }
+  if (view) return <SpAlert loading={view} />
+
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -299,13 +312,13 @@ const Sidebar = ({ children }: PRops) => {
                     minWidth: 0,
                     mr: open ? 3 : 'auto',
                     justifyContent: 'center',
-                    color: router.pathname === item.url ? grey[300] : grey[800],
+                    color: router.pathname === item.url ? blue[600] : grey[800],
                   }}
                   onClick={() => handleUri(item.url)}
                 >
                   {item.icon}
                 </ListItemIcon>
-                <ListItemText primary={item.name} sx={{ opacity: open ? 1 : 0, color: router.pathname === item.url ? grey[300] : grey[800] }} onClick={() => handleUri(item.url)} />
+                <ListItemText primary={item.name} sx={{ opacity: open ? 1 : 0, color: router.pathname === item.url ? blue[600] : grey[800] }} onClick={() => handleUri(item.url)} />
               </ListItemButton>
             </ListItem>
           ))}

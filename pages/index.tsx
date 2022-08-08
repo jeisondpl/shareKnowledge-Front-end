@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Grid } from '@mui/material'
 import Layout from '../layout/Layout'
 import { useSelector } from 'react-redux'
@@ -5,9 +6,13 @@ import { RootState } from '../store/rootReducer'
 import SpCard from '../components/SpCard'
 import { MENU } from '../components/Sidebar'
 import { blue } from '@mui/material/colors'
+import { useRouter } from 'next/router'
 
 const Index = () => {
+  const router = useRouter()
+
   const user = useSelector((state: RootState) => state.auth.user)
+ 
 
   return (
     <Layout>
