@@ -98,7 +98,7 @@ const SpTable = ({ name = 'Usuarios', rows, children, onEditOronDelete = () => {
         })
         .filter((row: any) => row.rol !== 'ADMINISTRADOR')
       break
-    case 'Material':
+    case 'Materiales':
       rows = rows.map((row: any) => {
         return {
           ...row,

@@ -47,7 +47,7 @@ const Usuarios = () => {
 
   return (
     <Layout>
-      <SpAlerta message={error && error.message} loading={loading} />
+      <SpAlerta error={error && error.message} loading={loading} />
 
       <SpTable name={'Usuarios'} rows={data ? data.obtenerTodosUsuarios : []} onEditOronDelete={onEditOronDelete}>
         <IconButton aria-label='delete' size='large' onClick={() => router.push('/')}>

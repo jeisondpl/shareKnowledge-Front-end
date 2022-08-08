@@ -31,7 +31,7 @@ const Material = () => {
   return (
     <Layout>
       <SpAlert error={error?.message} loading={loading} />
-      <SpTable name={'Material'} rows={data ? data.obtenerTodosMateriales : []} onEditOronDelete={onEditOronDelete}>
+      <SpTable name={'Materiales'} rows={data ? data.obtenerTodosMateriales : []} onEditOronDelete={onEditOronDelete}>
         <DialogActions>
           <Button type='submit' variant='contained' color='success' endIcon={<AddBoxIcon />} onClick={() => router.push('/materiales/nuevo')}>
             Nuevo

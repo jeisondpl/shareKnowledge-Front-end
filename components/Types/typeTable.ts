@@ -3,4 +3,4 @@ export interface columns {
     value: string
 }
 
-export type proccessTable = 'Productos' | 'Usuarios' | 'Material' | "Cursos" |'Categoria materiales'
+export type proccessTable = 'Productos' | 'Usuarios' | 'Materiales' | "Cursos" | 'Categoria materiales'
