@@ -27,4 +27,15 @@ query obtenerUsuario {
 }
 `
 
-
+export const GET_ALL_DOCENTE = gql`
+  query obtenerTodosDocentes {
+    obtenerTodosDocentes {
+      id
+      nombre
+      apellido
+      email
+      creado
+      rol
+    }
+  }
+`

@@ -3,7 +3,7 @@ import SpLoading from '../../../components/SpLoading'
 import Layout from '../../../layout/Layout'
 import { useQuery } from '@apollo/client'
 import SpTable from '../../../components/Table/SpTable'
-import { GET_ALL } from '../../../graphQL/front/Querys/Usuarios'
+import { GET_ALL } from '../../../graphQL/front/Querys/CatMateriales'
 import { InputRegister, UsuariosDataAll } from '../../../types/Usuario'
 import { Button, DialogActions } from '@mui/material'
 import { useRouter } from 'next/router'
@@ -12,10 +12,11 @@ import SpModalBasic from '../../../components/SpModalBasic'
 import FormRegister from '../../../components/Forms/FormRegister'
 import SpDialog from '../../../components/SpDialog'
 import VisibilityIcon from '@mui/icons-material/Visibility'
+import { CatMateriales } from '../../../types/Categorias'
 
 const Cursos = () => {
   const router = useRouter()
-  const { data, loading, error } = useQuery<UsuariosDataAll, InputRegister>(GET_ALL)
+  const { data, loading, error } = useQuery<{ obtenerTodosCategoriaMaterial: CatMateriales[] }, CatMateriales>(GET_ALL)
   const [openEdit, setOpenEdit] = useState(false)
   const [openDelete, setOpenDelete] = useState(false)
   const [usuario, setUsuario] = useState<string>()
@@ -50,14 +51,14 @@ const Cursos = () => {
     <Layout>
       <SpLoading loading={loading} />
       <>{error && <p>Error: {error.message}</p>}</>
-      <SpTable name={'Categoria materiales'} rows={data ? data.obtenerTodosUsuarios : []} onEditOronDelete={onEditOronDelete}>
+      <SpTable name={'Categoria materiales'} rows={data ? data.obtenerTodosCategoriaMaterial : []} onEditOronDelete={onEditOronDelete}>
         <DialogActions>
-          <Button type='submit' variant='contained' color='success' endIcon={<AddBoxIcon />} onClick={() => {}}>
+          <Button type='submit' variant='contained' color='success' endIcon={<AddBoxIcon />} onClick={() => router.push('/materiales/categoria/nuevo')}>
             Nuevo
           </Button>
-          <Button type='submit' variant='contained' color='primary' endIcon={<VisibilityIcon />} onClick={() => {}}>
+          {/* <Button type='submit' variant='contained' color='primary' endIcon={<VisibilityIcon />} onClick={() => {}}>
             detalle
-          </Button>
+          </Button> */}
         </DialogActions>
       </SpTable>
       <SpModalBasic open={openEdit} title={'Editar'}>

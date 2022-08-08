@@ -39,6 +39,7 @@ type Query {
   #Usuarios
   obtenerUsuario: Usuario
   obtenerTodosUsuarios: [Usuario]
+  obtenerTodosDocentes: [Usuario]
 }
 
 type Mutation {
@@ -46,6 +47,7 @@ type Mutation {
   nuevoUsuario(input: UsuarioInput): Usuario
   autenticarUsuario(input: AutenticarInput): Token
   actualizarUsuario(id: ID!, input: UsuarioInput): Usuario
+  
 }
 `
 

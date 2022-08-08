@@ -34,9 +34,11 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-draggable": "^4.4.5",
+    "react-player": "^2.10.1",
     "react-redux": "^8.0.2",
     "redux": "^4.2.0",
     "redux-thunk": "^2.4.1",
+    "sweetalert2": "^11.4.26",
     "yup": "^0.32.11"
   },
   "devDependencies": {

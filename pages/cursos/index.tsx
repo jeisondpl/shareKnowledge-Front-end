@@ -1,70 +1,64 @@
-import React, { useCallback, useState } from 'react'
-import SpLoading from '../../components/SpLoading'
+import React, { useCallback } from 'react'
 import Layout from '../../layout/Layout'
+import Divider from '@mui/material/Divider'
 import { useQuery } from '@apollo/client'
-import SpTable from '../../components/Table/SpTable'
-import { GET_ALL } from '../../graphQL/front/Querys/Usuarios'
-import { InputRegister, UsuariosDataAll } from '../../types/Usuario'
-import { Button, DialogActions } from '@mui/material'
+import { GET_ALL } from '../../graphQL/front/Querys/Materiales'
+import { Grid } from '@mui/material'
 import { useRouter } from 'next/router'
-import AddBoxIcon from '@mui/icons-material/AddBox'
-import SpModalBasic from '../../components/SpModalBasic'
-import FormRegister from '../../components/Forms/FormRegister'
-import SpDialog from '../../components/SpDialog'
-import VisibilityIcon from '@mui/icons-material/Visibility'
-import detalle from './detalle'
+import SpAlert from '../../components/SpAlert'
+import { SpCard, InputSearch } from '../../components'
 
+export interface Material {
+  id: string
+  titulo: string
+  categoria: string
+  descripcion: string
+  usuario: string
+}
 const Cursos = () => {
   const router = useRouter()
-  const { data, loading, error } = useQuery<UsuariosDataAll, InputRegister>(GET_ALL)
-  const [openEdit, setOpenEdit] = useState(false)
-  const [openDelete, setOpenDelete] = useState(false)
-  const [usuario, setUsuario] = useState<string>()
+  const { data, loading, error } = useQuery<{ obtenerTodosMateriales: Material[] }, Material>(GET_ALL)
 
-  const onEditOronDelete = useCallback(
-    (rowData: any, proceso: string) => {
-      if (proceso === 'edit') {
-        setOpenEdit(true)
-      }
-      if (proceso === 'delete') {
-        setOpenDelete(true)
-      }
-      setUsuario(rowData)
-    },
-    [router]
-  )
-
-  const onSubmit = useCallback((rowData: any) => {
-    console.log('id old: ', usuario)
-    console.log('new data: ', rowData)
-    setOpenEdit(false)
-    setUsuario(undefined)
+  const onEditOronDelete = useCallback((rowData: any, proceso: string) => {
+    if (proceso === 'edit') {
+      console.log('edit', rowData, proceso)
+    }
+    if (proceso === 'delete') {
+      console.log('delete', rowData, proceso)
+    }
   }, [])
-
-  const handleDelete = () => {
-    console.log('ejecutar delete :', usuario)
-    setOpenDelete(false)
-    setUsuario(undefined)
-  }
 
   return (
     <Layout>
-      <SpLoading loading={loading} />
-      <>{error && <p>Error: {error.message}</p>}</>
-      <SpTable name={'Cursos'} rows={data ? data.obtenerTodosUsuarios : []} onEditOronDelete={onEditOronDelete}>
-        <DialogActions>
-          <Button type='submit' variant='contained' color='success' endIcon={<AddBoxIcon />} onClick={() => router.push('/cursos/nuevo')}>
-            Nuevo
-          </Button>
-          <Button type='submit' variant='contained' color='primary' endIcon={<VisibilityIcon />} onClick={() => router.push('/cursos/detalle')}>
-            detalle
-          </Button>
-        </DialogActions>
-      </SpTable>
-      <SpModalBasic open={openEdit} title={'Editar'}>
-        <FormRegister onSubmit={onSubmit} titleBtn='Editar' />
-      </SpModalBasic>
-      <SpDialog open={openDelete} title={'Eliminar'} description={'¿Desea eliminar este registro?'} onCancel={() => setOpenDelete(false)} onSubmit={handleDelete} />
+      <SpAlert error={error?.message} loading={loading} />
+
+      <Grid container spacing={3}>
+        <>
+          <Grid item xs={12}>
+            <InputSearch />
+          </Grid>
+          <Grid item xs={12}>
+            <Divider />
+            <h2>Mis cursos</h2>
+          </Grid>
+          {data &&
+            data.obtenerTodosMateriales.map((item) => (
+              <Grid key={item.id} item md={3} xs={6} rowSpacing={3}>
+                <SpCard key={item.id} title={item.titulo} url={'/cursos/detalle'} />
+              </Grid>
+            ))}
+
+          <Grid item xs={12}>
+            <h2>Todos los cursos</h2>
+          </Grid>
+          {data &&
+            data.obtenerTodosMateriales.map((item) => (
+              <Grid key={item.id} item md={3} xs={6} rowSpacing={3}>
+                <SpCard key={item.id} title={item.titulo} url={'/cursos/detalle'} />
+              </Grid>
+            ))}
+        </>
+      </Grid>
     </Layout>
   )
 }

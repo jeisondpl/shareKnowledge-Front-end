@@ -39,6 +39,26 @@ export const resolverMaterial = {
         throw new Error('Error el obtener los materiales ERROR:' + error)
       }
     },
+    obtenerCursosEstudiantes: async (_: any, { }) => {
+      try {
+        const material = await Material.find({})
+        return material
+      } catch (error) {
+        throw new Error('Error el obtener los materiales ERROR:' + error)
+      }
+    },
+    obtenerCursosPorDocente: async (_: any, { }, ctx: any) => {
+      try {
+        if (ctx.usuario.rol === 'DOCENTE') {
+          const material = await Material.find({ usuario: ctx.usuario.id })
+          return material
+        } else {
+          throw new Error('No tiene el rol de docente')
+        }
+      } catch (error) {
+        throw new Error('Error el obtener los materiales ERROR:' + error)
+      }
+    },
   },
   Mutation: {
     nuevoMaterial: async (_: any, { input }: InputNuevoMaterial, ctx: any) => {

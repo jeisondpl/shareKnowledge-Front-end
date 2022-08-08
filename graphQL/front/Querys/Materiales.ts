@@ -13,17 +13,17 @@ export const GET_ALL = gql`
 `
 
 
-// export const GET_FIND_BY_ID = gql`
-// query obtenerUsuario {
-//   obtenerUsuario {
-//       id
-//       nombre
-//       apellido
-//       email
-//       creado
-//       rol
-//   }
-// }
-// `
+export const GET_ALL_DOCENTE = gql`
+query ObtenerCursosPorDocente {
+  obtenerCursosPorDocente {
+    id
+    titulo
+    descripcion
+    creado
+    usuario
+    categoria
+  }
+}
+`
 
 

@@ -24,16 +24,16 @@ export const resolverCategoriaMaterial = {
       return material
     },
     obtenerTodosCategoriaMaterial: async (_: any, { }, ctx: any) => {
+      console.log(ctx.usuario.rol)
       try {
-        if (ctx.usuario.rol !== 'ADMINISTRADOR') {
+        if (ctx.usuario.rol === 'ADMINISTRADOR') {
           const material = await CategoriaMaterial.find({})
           return material
         } else {
-          const material = await CategoriaMaterial.find({ usuario: ctx.usuario.id })
-          return material
+          throw new Error('Rol no es administrador')
         }
       } catch (error) {
-        throw new Error('Error el obtener los materiales ERROR:' + error)
+        throw new Error('Error el obtener las categoorias de materiales ERROR:' + error)
       }
     },
   },

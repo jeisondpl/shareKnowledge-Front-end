@@ -48,15 +48,14 @@ const Usuarios = () => {
   return (
     <Layout>
       <SpAlerta error={error && error.message} loading={loading} />
-
       <SpTable name={'Usuarios'} rows={data ? data.obtenerTodosUsuarios : []} onEditOronDelete={onEditOronDelete}>
-        <IconButton aria-label='delete' size='large' onClick={() => router.push('/')}>
+        <IconButton aria-label='addUser' size='large' onClick={() => setOpenEdit(true)}>
           <AddBoxIcon fontSize='inherit' color='success' />
         </IconButton>
       </SpTable>
 
-      <SpModalBasic open={openEdit} title={'Editar'}>
-        <FormRegister onSubmit={onSubmit} titleBtn='Editar' />
+      <SpModalBasic open={openEdit} title={'Crear usuario'}>
+        <FormRegister onSubmit={onSubmit} titleBtn='Crear' />
       </SpModalBasic>
 
       <SpDialog open={openDelete} title={'Eliminar'} description={'¿Desea eliminar este registro?'} onCancel={() => setOpenDelete(false)} onSubmit={handleDelete} />

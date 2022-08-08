@@ -1,11 +1,11 @@
 import React, { useCallback } from 'react'
-import Layout from '../../layout/Layout'
-import { FormLoadMaterial } from '../../components'
+import Layout from '../../../layout/Layout'
+import { FormLoadMaterial } from '../../../components'
 import { Box, Card, Grid, Button, DialogActions } from '@mui/material'
 import { useRouter } from 'next/router'
 import SaveIcon from '@mui/icons-material/Save'
 import CancelIcon from '@mui/icons-material/Cancel'
-import { dev } from '../../components/utils/oops'
+import { dev } from '../../../components/utils/oops'
 
 const Nuevomaterial = () => {
   const router = useRouter()
@@ -19,15 +19,15 @@ const Nuevomaterial = () => {
       <Grid container spacing={2}>
         <Grid item xs={8}>
           <Box sx={{ flex: 'auto' }}>
-            <h2>Crear Material</h2>
+            <h2>Crear categoria</h2>
           </Box>
           <Card sx={{ padding: '40px' }}>
-            <FormLoadMaterial onSubmit={onSubmit} onCancel={() => {}} titleBtn={'Guardar'} type={'material'} />
+            <FormLoadMaterial onSubmit={onSubmit} onCancel={() => {}} titleBtn={'Guardar'} type={'categoria'} />
           </Card>
         </Grid>
         <Grid item xs={4}>
           <DialogActions>
-            <Button variant='contained' color='inherit' endIcon={<CancelIcon />} onClick={() => router.push('/materiales')}>
+            <Button variant='contained' color='inherit' endIcon={<CancelIcon />} onClick={() => router.push('/materiales/categoria')}>
               Cancelar
             </Button>
             <Button type='submit' variant='contained' color='primary' onClick={() => dev()} endIcon={<SaveIcon />}>

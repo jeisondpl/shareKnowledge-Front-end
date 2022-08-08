@@ -45,6 +45,19 @@ export const resolverUsuarios = {
         console.log(error)
       }
     },
+    obtenerTodosDocentes: async (_: any, { }, ctx: any) => {
+      console.log(ctx.usuario.rol)
+
+      if (ctx.usuario.rol !== 'ADMINISTRADOR') {
+        throw new Error('No tiene el rol de Administrador')
+      }
+      try {
+        const usuario = await Usuario.find({ rol: "DOCENTE" })
+        return usuario
+      } catch (error) {
+        console.log(error)
+      }
+    },
   },
   Mutation: {
     nuevoUsuario: async (_: any, { input }: InputNuevoUsuario) => {

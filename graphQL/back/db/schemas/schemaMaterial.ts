@@ -24,6 +24,9 @@ type Query {
   #Materiales
   obtenerMaterial(id: ID!): Material
   obtenerTodosMateriales: [Material]
+  obtenerCursosEstudiantes: [Material]
+  obtenerCursosPorDocente: [Material]
+
 }
 
 type Mutation {

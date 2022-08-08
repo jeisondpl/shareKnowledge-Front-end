@@ -12,11 +12,11 @@ import moment from 'moment'
 
 interface Props {
   title: string
-  image: string
-  url: string
+  image?: string
+  url?: string
 }
 
-export default function SpCard({ title, image, url }: Props) {
+export default function SpCard({ title, image, url = '/' }: Props) {
   const theme = useTheme()
   return (
     <span style={{ cursor: 'pointer' }}>
@@ -38,17 +38,19 @@ export default function SpCard({ title, image, url }: Props) {
             </Box>
           </Box>
 
-          <CardMedia
-            component='img'
-            style={{
-              width: 'auto',
-              maxHeight: '200px',
-              paddingBottom: '20px',
-              opacity: '.2',
-            }}
-            image={image}
-            alt='Live from space album cover'
-          />
+          {image && (
+            <CardMedia
+              component='img'
+              style={{
+                width: 'auto',
+                maxHeight: '200px',
+                paddingBottom: '20px',
+                opacity: '.2',
+              }}
+              image={image}
+              alt='Live from space album cover'
+            />
+          )}
         </Card>
       </Link>
     </span>
