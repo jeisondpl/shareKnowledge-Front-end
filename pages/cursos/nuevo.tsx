@@ -5,8 +5,6 @@ import { Box, Card, Grid, Button, DialogActions } from '@mui/material'
 import { useRouter } from 'next/router'
 import SaveIcon from '@mui/icons-material/Save'
 import CancelIcon from '@mui/icons-material/Cancel'
-import stylesEditor from '../../styles/editor.module.scss'
-import stylesForms from '../../styles/forms.module.scss'
 
 const NuevoCurso = () => {
   const router = useRouter()
@@ -23,11 +21,9 @@ const NuevoCurso = () => {
           <Box sx={{ flex: 'auto' }}>
             <h2>Cargar Cursos</h2>
           </Box>
-          <div className={stylesEditor.editorContainer}>
-            <Card className={stylesForms.card}>
-              <FormLoad onSubmit={onSubmit} onCancel={() => {}} titleBtn={'Guardar'} />
-            </Card>
-          </div>
+          <Card sx={{ padding: '40px' }}>
+            <FormLoad onSubmit={onSubmit} onCancel={() => {}} titleBtn={'Guardar'} />
+          </Card>
         </Grid>
         <Grid item xs={4}>
           <DialogActions>

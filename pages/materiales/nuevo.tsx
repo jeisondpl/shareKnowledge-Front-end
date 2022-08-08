@@ -5,8 +5,6 @@ import { Box, Card, Grid, Button, DialogActions } from '@mui/material'
 import { useRouter } from 'next/router'
 import SaveIcon from '@mui/icons-material/Save'
 import CancelIcon from '@mui/icons-material/Cancel'
-import stylesEditor from '../../styles/editor.module.scss'
-import stylesForms from '../../styles/forms.module.scss'
 
 const Nuevomaterial = () => {
   const router = useRouter()
@@ -22,11 +20,9 @@ const Nuevomaterial = () => {
           <Box sx={{ flex: 'auto' }}>
             <h2>Cargar Material</h2>
           </Box>
-          <div className={stylesEditor.editorContainer}>
-            <Card className={stylesForms.card}>
-              <FormLoadMaterial onSubmit={onSubmit} onCancel={() => {}} titleBtn={'Guardar'} />
-            </Card>
-          </div>
+          <Card sx={{ padding: '40px' }}>
+            <FormLoadMaterial onSubmit={onSubmit} onCancel={() => {}} titleBtn={'Guardar'} />
+          </Card>
         </Grid>
         <Grid item xs={4}>
           <DialogActions>
@@ -43,7 +39,4 @@ const Nuevomaterial = () => {
   )
 }
 
-{
-  /* <SpEditor readOnly={true} handleChange={(e: any) => {}} initialText={'hola'} /> */
-}
 export default Nuevomaterial
