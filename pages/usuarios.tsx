@@ -4,9 +4,7 @@ import { useQuery } from '@apollo/client'
 import SpTable from '../components/Table/SpTable'
 import { GET_ALL } from '../graphQL/front/Querys/Usuarios'
 import { InputRegister, UsuariosDataAll } from '../types/Usuario'
-import { IconButton } from '@mui/material'
 import { useRouter } from 'next/router'
-import AddBoxIcon from '@mui/icons-material/AddBox'
 import SpModalBasic from '../components/SpModalBasic'
 import FormRegister from '../components/Forms/FormRegister'
 import SpDialog from '../components/SpDialog'
@@ -48,16 +46,11 @@ const Usuarios = () => {
   return (
     <Layout>
       <SpAlerta error={error && error.message} loading={loading} />
-      <SpTable name={'Usuarios'} rows={data ? data.obtenerTodosUsuarios : []} onEditOronDelete={onEditOronDelete}>
-        <IconButton aria-label='addUser' size='large' onClick={() => setOpenEdit(true)}>
-          <AddBoxIcon fontSize='inherit' color='success' />
-        </IconButton>
-      </SpTable>
-
-      <SpModalBasic open={openEdit} title={'Crear usuario'}>
+      <SpTable name={'Usuarios'} rows={data ? data.obtenerTodosUsuarios : []} onButtonNew={() => setOpenEdit(true)} onEditOronDelete={onEditOronDelete} />
+      {/* create */}
+      <SpModalBasic open={openEdit} title={'Crear usuario'} onClose={() => setOpenEdit(false)}>
         <FormRegister onSubmit={onSubmit} titleBtn='Crear' />
       </SpModalBasic>
-
       <SpDialog open={openDelete} title={'Eliminar'} description={'¿Desea eliminar este registro?'} onCancel={() => setOpenDelete(false)} onSubmit={handleDelete} />
     </Layout>
   )

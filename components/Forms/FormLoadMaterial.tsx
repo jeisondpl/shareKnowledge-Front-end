@@ -1,6 +1,6 @@
 import React, { memo, useState } from 'react'
 import { Formik, Form } from 'formik'
-import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material'
+import { Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material'
 import { InitialValueRegister, SchemaRegister } from './schema/SchemaRegister'
 import TextareaAutosize from '@mui/material/TextareaAutosize'
 import SpUploadFile from '../../components/SpUploadFile'
@@ -20,8 +20,7 @@ interface Props {
 
 const FormLoad = ({ onSubmit, onCancel, titleBtn = 'Registrar', type = 'material' }: Props) => {
   const [age, setAge] = useState('')
-  const { data, loading, error } = useQuery<{ obtenerTodosDocentes: InputRegister[] }, InputRegister>(GET_ALL_DOCENTE)
-  const { data: dataCat, loading: l, error: e } = useQuery<{ obtenerTodosCategoriaMaterial: CatMateriales[] }, CatMateriales>(GET_ALL)
+  const { data: dataCat, loading, error } = useQuery<{ obtenerTodosCategoriaMaterial: CatMateriales[] }, CatMateriales>(GET_ALL)
 
   const handleChange = (event: SelectChangeEvent) => {
     setAge(event.target.value as string)
@@ -50,23 +49,10 @@ const FormLoad = ({ onSubmit, onCancel, titleBtn = 'Registrar', type = 'material
             }}
           >
             <>
-              {type === 'material' && (
-                <FormControl fullWidth>
-                  <InputLabel id='demo-simple-select-label'>Docentes</InputLabel>
-                  <Select labelId='demo-simple-select-label' id='demo-simple-select' value={age} label='Age' onChange={handleChange}>
-                    {data &&
-                      data.obtenerTodosDocentes.map((docente: InputRegister) => (
-                        <MenuItem key={docente.id} value={docente.id}>
-                          {docente.nombre}
-                        </MenuItem>
-                      ))}
-                  </Select>
-                </FormControl>
-              )}
               <TextField
                 margin='normal'
                 fullWidth
-                label={type === 'material' ? 'Nombre del curso' : 'Nombre de la categoria'}
+                label={type === 'material' ? 'Nombre del material' : 'Nombre de la categoria'}
                 name='nombre'
                 autoComplete='off'
                 onBlur={handleBlur}
@@ -77,7 +63,7 @@ const FormLoad = ({ onSubmit, onCancel, titleBtn = 'Registrar', type = 'material
                 <FormControl fullWidth>
                   <InputLabel id='demo-simple-select-label'>Categoria</InputLabel>
                   <Select labelId='demo-simple-select-label' id='demo-simple-select' value={age} label='Age' onChange={handleChange}>
-                    {data &&
+                    {dataCat &&
                       dataCat?.obtenerTodosCategoriaMaterial.map((categoria: CatMateriales) => (
                         <MenuItem key={categoria.id} value={categoria.id}>
                           {categoria.nombre}
@@ -112,6 +98,9 @@ const FormLoad = ({ onSubmit, onCancel, titleBtn = 'Registrar', type = 'material
               {type === 'material' && (
                 <SpUploadFile deleteFile={() => {}} files={[]} handleFile={() => {}} multiple={false} placeholder='Haz click para seleccionar el archivo' validateSize={false} />
               )}
+              <Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
+                Crear material
+              </Button>
             </>
           </Form>
         )}

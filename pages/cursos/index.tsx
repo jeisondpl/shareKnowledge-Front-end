@@ -31,34 +31,16 @@ const Cursos = () => {
   return (
     <Layout>
       <SpAlert error={error?.message} loading={loading} />
-
       <Grid container spacing={3}>
-        <>
-          <Grid item xs={12}>
-            <InputSearch />
-          </Grid>
-          <Grid item xs={12}>
-            <Divider />
-            <h2>Mis cursos</h2>
-          </Grid>
-          {data &&
-            data.obtenerTodosMateriales.map((item) => (
-              <Grid key={item.id} item md={3} xs={6} rowSpacing={3}>
-                <SpCard key={item.id} title={item.titulo} url={'/cursos/detalle'} />
-              </Grid>
-            ))}
-
-          <Grid item xs={12}>
-            <Divider />
-            <h2>Todos los cursos</h2>
-          </Grid>
-          {data &&
-            data.obtenerTodosMateriales.map((item) => (
-              <Grid key={item.id} item md={3} xs={6} rowSpacing={3}>
-                <SpCard key={item.id} title={item.titulo} url={'/cursos/detalle'} />
-              </Grid>
-            ))}
-        </>
+        <Grid item xs={12}>
+          <h1>Gestion de cursos</h1>
+        </Grid>
+        <Grid item md={5} xs={12} xl={3}>
+          <SpCard title={'Cursos'} descripcion='Gestion de cursos asociar curso con materiales' url={'/cursos/list'} image='https://cdn-icons-png.flaticon.com/512/46/46789.png' />
+        </Grid>
+        <Grid item md={5} xs={12} xl={3}>
+          <SpCard title={'Asociar cursos'} url={'/cursos/detalle'} descripcion='Asocia un curso a docentes' image='https://cdn-icons-png.flaticon.com/512/115/115921.png' />
+        </Grid>
       </Grid>
     </Layout>
   )

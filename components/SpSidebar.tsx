@@ -60,7 +60,7 @@ export const MENU: Menu[] = [
     name: 'Usuarios',
     url: '/usuarios',
     icon: <PersonIcon />,
-    image: 'https://icons.veryicon.com/png/o/internet--web/prejudice/user-128.png',
+    image: 'https://cdn.icon-icons.com/icons2/936/PNG/512/user-shape_icon-icons.com_73346.png',
   },
   {
     id: 3,
@@ -160,13 +160,13 @@ const SpSidebar = ({ children }: PRops) => {
   const token = useSelector((state: RootState) => state.auth.token)
   const [view, setView] = useState(true)
 
-  // useEffect(() => {
-  //   if (!token) {
-  //     router.push('/login')
-  //   } else {
-  //     setView(false)
-  //   }
-  // }, [router])
+  useEffect(() => {
+    if (!token) {
+      router.push('/login')
+    } else {
+      setView(false)
+    }
+  }, [router])
 
   const user = useSelector((state: RootState) => state.auth.user)
   const dispatch = useDispatch()
@@ -203,7 +203,8 @@ const SpSidebar = ({ children }: PRops) => {
   const handleUri = (url: string) => {
     router.push(url)
   }
-  // if (view) return <SpAlert loading={view} />
+
+  if (view) return <SpAlert loading={view} />
 
   return (
     <Box sx={{ display: 'flex' }}>

@@ -12,8 +12,12 @@ import { useAlert } from '../components/Hooks'
 const Login = () => {
   const router = useRouter()
   const dispatch = useDispatch()
+ 
   const [autenticarUsuario, { loading, data, error }] = useMutation<ResponseLogin, { input: InputLogin }>(LOGIN_USER, { fetchPolicy: 'network-only' })
+  
   const { onSuccess, onError, mensaje } = useAlert()
+
+
 
   useEffect(() => {
     if (data && data?.autenticarUsuario.token) {

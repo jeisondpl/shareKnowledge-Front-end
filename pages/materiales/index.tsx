@@ -1,23 +1,16 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useState } from 'react'
 import Layout from '../../layout/Layout'
-import { useQuery } from '@apollo/client'
 import SpTable from '../../components/Table/SpTable'
-import { GET_ALL } from '../../graphQL/front/Querys/Materiales'
-import { Button, DialogActions } from '@mui/material'
 import { useRouter } from 'next/router'
-import AddBoxIcon from '@mui/icons-material/AddBox'
 import SpAlert from '../../components/SpAlert'
+import SpModalBasic from '../../components/SpModalBasic'
+import { FormLoadMaterial } from '../../components'
+import { useMateriales } from '../../hooks'
 
-export interface Material {
-  id: string
-  titulo: string
-  categoria: string
-  descripcion: string
-  usuario: string
-}
 const Material = () => {
   const router = useRouter()
-  const { data, loading, error } = useQuery<{ obtenerTodosMateriales: Material[] }, Material>(GET_ALL)
+  const [open, setOpen] = useState(false)
+  const { data, loading, error } = useMateriales()
 
   const onEditOronDelete = useCallback((rowData: any, proceso: string) => {
     if (proceso === 'edit') {
@@ -28,16 +21,20 @@ const Material = () => {
     }
   }, [])
 
+  const onSubmit = useCallback(async (values: any) => {
+    console.log(values)
+    router.push('/materiales')
+  }, [])
+
   return (
     <Layout>
       <SpAlert error={error?.message} loading={loading} />
-      <SpTable name={'Materiales'} rows={data ? data.obtenerTodosMateriales : []} onEditOronDelete={onEditOronDelete}>
-        <DialogActions>
-          <Button type='submit' variant='contained' color='success' endIcon={<AddBoxIcon />} onClick={() => router.push('/materiales/nuevo')}>
-            Nuevo
-          </Button>
-        </DialogActions>
-      </SpTable>
+      <SpTable name={'Materiales'} rows={data ? data.obtenerTodosMateriales : []} onButtonNew={() => setOpen(true)} onEditOronDelete={onEditOronDelete} />
+
+      {/* create */}
+      <SpModalBasic open={open} title={'Crear material'} onClose={() => setOpen(false)}>
+        <FormLoadMaterial onSubmit={onSubmit} onCancel={() => {}} titleBtn={'Guardar'} type={'material'} />
+      </SpModalBasic>
     </Layout>
   )
 }

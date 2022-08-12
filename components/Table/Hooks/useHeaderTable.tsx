@@ -8,8 +8,10 @@ const useHeaderTable = (name: proccessTable) => {
       return [Dc.titulo, Dc.categoria, Dc.descripcion, Dc.acciones]
     case 'Usuarios':
       return [Dc.nombre, Dc.apellido, Dc.email, Dc.rol, Dc.acciones]
-    case 'Categoria materiales':
+    case 'Categorias':
       return [Dc.nombre, Dc.descripcion, Dc.creado, Dc.acciones]
+    case 'Cursos':
+      return [Dc.titulo, Dc.categoria, Dc.usuario, Dc.descripcion, Dc.acciones]
     default:
       return []
   }

@@ -1,6 +1,6 @@
 import { memo } from 'react'
 import { styled } from '@mui/material/styles'
-import { Box } from '@mui/material'
+import { Box, Button, DialogActions, IconButton } from '@mui/material'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell, { tableCellClasses } from '@mui/material/TableCell'
@@ -12,6 +12,8 @@ import { proccessTable } from '../Types/typeTable'
 import useHeaderTable from './Hooks/useHeaderTable'
 import Actions from './Actions'
 import moment from 'moment'
+import CheckIcon from '@mui/icons-material/Check'
+import AddBoxIcon from '@mui/icons-material/AddBox'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -38,9 +40,11 @@ interface Props {
   name: proccessTable
   children?: JSX.Element | JSX.Element[]
   onEditOronDelete?: (row: any, proceso: string) => void
+  isAccion?: boolean
+  onButtonNew?: (row: any) => void
 }
 
-const SpTable = ({ name = 'Usuarios', rows, children, onEditOronDelete = () => {} }: Props) => {
+const SpTable = ({ children, onButtonNew, name = 'Usuarios', rows, onEditOronDelete = () => {}, isAccion = true }: Props) => {
   const header = useHeaderTable(name)
 
   switch (name) {
@@ -54,13 +58,21 @@ const SpTable = ({ name = 'Usuarios', rows, children, onEditOronDelete = () => {
         })
         .filter((row: any) => row.rol !== 'ADMINISTRADOR')
       break
-    case 'Categoria materiales':
+    case 'Cursos':
+    case 'Categorias':
     case 'Materiales':
       rows = rows.map((row: any) => {
         return {
           ...row,
           creado: moment(row.creado).format('DD/MM/YYYY'),
-          acciones: <Actions onEditOronDelete={onEditOronDelete} id={row.id} />,
+
+          acciones: isAccion ? (
+            <Actions onEditOronDelete={onEditOronDelete} id={row.id} />
+          ) : (
+            <IconButton type='submit' aria-label='search' onClick={() => {}}>
+              <CheckIcon color='success' />,
+            </IconButton>
+          ),
         }
       })
       break
@@ -70,11 +82,18 @@ const SpTable = ({ name = 'Usuarios', rows, children, onEditOronDelete = () => {
     <>
       <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignContent: 'center' }}>
         <Box sx={{ flex: 'auto' }}>
-          <h2>
-            {name} : {rows.length}
-          </h2>
+          <h1>{name}</h1>
         </Box>
-        <Box sx={{ justifyContent: 'center' }}>{children}</Box>
+        <Box sx={{ justifyContent: 'center' }}>
+          {onButtonNew && (
+            <DialogActions>
+              <Button type='submit' variant='contained' color='success' endIcon={<AddBoxIcon />} onClick={onButtonNew}>
+                Nuevo
+              </Button>
+            </DialogActions>
+          )}
+          {children}
+        </Box>
       </Box>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 700 }} aria-label='customized table'>

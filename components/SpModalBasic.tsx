@@ -2,6 +2,8 @@ import * as React from 'react'
 import Box from '@mui/material/Box'
 import Modal from '@mui/material/Modal'
 import Button from '@mui/material/Button'
+import { DialogActions, IconButton } from '@mui/material'
+import CloseIcon from '@mui/icons-material/Close'
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -22,13 +24,19 @@ interface Props {
   onClose?: () => void
   children: React.ReactNode
   title: string
+  width?: number
 }
 
-export default function SpModalBasic({ open, onClose = () => {}, children, title }: Props) {
+export default function SpModalBasic({ open, onClose = () => {}, children, title, width = 400 }: Props) {
   return (
     <div>
       <Modal open={open} onClose={onClose} aria-labelledby='parent-modal-title' aria-describedby='parent-modal-description'>
-        <Box sx={{ ...style, width: 400 }}>
+        <Box sx={{ ...style, width: width }}>
+          <DialogActions>
+            <IconButton type='submit' aria-label='search' onClick={onClose}>
+              <CloseIcon sx={{ marginLeft: '10px' }} />
+            </IconButton>
+          </DialogActions>
           <h2 id='parent-modal-title'>{title}</h2>
           {children}
         </Box>

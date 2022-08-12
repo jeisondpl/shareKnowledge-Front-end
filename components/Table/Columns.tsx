@@ -14,12 +14,17 @@ interface format {
   creado: columns
   rol: columns
   titulo: columns
+  usuario: columns
 }
 
 export const dataColumns: format = {
   id: {
     field: 'Id',
     value: 'id',
+  },
+  usuario: {
+    field: 'Docente',
+    value: 'docente',
   },
   nombre: {
     field: 'Nombre',
