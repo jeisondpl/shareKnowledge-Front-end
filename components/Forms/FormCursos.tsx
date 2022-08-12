@@ -1,24 +1,7 @@
 import React, { memo, useState } from 'react'
 import { Formik, Form } from 'formik'
-import {
-  Box,
-  FormControl,
-  IconButton,
-  InputLabel,
-  MenuItem,
-  Paper,
-  Select,
-  SelectChangeEvent,
-  Stack,
-  styled,
-  TextField,
-  Grid,
-  Button,
-  DialogActions,
-  Card,
-  Typography,
-} from '@mui/material'
-import { InitialValueRegister, SchemaRegister } from './schema/SchemaRegister'
+import { Box, FormControl, IconButton, InputLabel, MenuItem, Paper, Select, styled, TextField, Grid, Button, DialogActions, Card, Typography } from '@mui/material'
+import { SchemaRegister } from './schema/SchemaRegister'
 import TextareaAutosize from '@mui/material/TextareaAutosize'
 import { InputRegister } from '../../types/Usuario'
 import SpAlerta from '../SpAlert'
