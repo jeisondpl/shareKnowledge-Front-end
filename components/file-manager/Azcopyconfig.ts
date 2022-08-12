@@ -1,5 +1,4 @@
 import { BlobServiceClient, AnonymousCredential } from '@azure/storage-blob';
-import { environment } from 'environments/environment';
 
 interface ISasInfo {
     Storage: string;

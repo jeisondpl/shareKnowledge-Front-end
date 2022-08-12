@@ -103,10 +103,12 @@ const FormCursos = ({ onSubmit, onCancel, titleBtn = 'Registrar', type = 'materi
 
   //hooks get cat materiales
   const { data, loading, error } = useCatMateriales()
+
   const { data: dataMateriales, loading: loadingMaterial, error: erroMaterial } = useMateriales()
 
   const [openCategorias, setOpenCategorias] = useState(false)
   const [openMaterial, setOpenMaterial] = useState(false)
+
   const [arrayAddMaterial, setArrayAddMaterial] = useState<Material2[]>(InitialAddMateriales)
 
   const handleOpenModalMaterial = () => {
@@ -268,7 +270,7 @@ const FormCursos = ({ onSubmit, onCancel, titleBtn = 'Registrar', type = 'materi
                               >
                                 {dataMateriales &&
                                   dataMateriales?.obtenerTodosMateriales.map((categoria: Material) => (
-                                    <MenuItem key={categoria.id} value={categoria.id}>
+                                    <MenuItem key={categoria.id} value={categoria.titulo}>
                                       {categoria.titulo}
                                     </MenuItem>
                                   ))}
@@ -366,13 +368,13 @@ const FormCursos = ({ onSubmit, onCancel, titleBtn = 'Registrar', type = 'materi
       </Formik>
 
       <SpModalBasic open={openCategorias} title={''} width={800} onClose={handleOnClose}>
-        <SpTable name={'Categorias'} rows={dataMateriales ? dataMateriales.obtenerTodosMateriales : []} onEditOronDelete={() => {}} isAccion={false}>
+        <SpTable name={'Categorias'} rows={data ? data.obtenerTodosCategoriaMaterial : []} onEditOronDelete={() => {}} isAccion={false}>
           <InputSearch placeHolder={'Buscar Categoria'} />
         </SpTable>
       </SpModalBasic>
 
       <SpModalBasic open={openMaterial} title={''} width={800} onClose={handleOnClose}>
-        <SpTable name={'Materiales'} rows={dataMaterial} onEditOronDelete={() => {}} isAccion={false}>
+        <SpTable name={'Materiales'} rows={dataMateriales ? dataMateriales.obtenerTodosMateriales : []} onEditOronDelete={() => {}} isAccion={false}>
           <InputSearch placeHolder={'Buscar Categoria'} />
         </SpTable>
       </SpModalBasic>
