@@ -147,6 +147,7 @@ const FormCursos = ({ onSubmit, onCancel, titleBtn = 'Registrar', type = 'materi
         return item
       })
     )
+    console.log(event.target)
     if (event.target.name === 'selectMaterial') {
       setArrayAddMaterial([...arrayAddMaterial, { id: event.target.value, nombre: event.target.value }])
     }

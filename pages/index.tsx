@@ -18,8 +18,8 @@ const Index = () => {
       <Grid container spacing={3}>
         {/* {user && user.rol !== 'VERIFICACION' ? ( */}
         {MENU.map((item) => (
-          <Grid item md={5} xs={12} xl={3}>
-            <SpCard key={item.id} title={item.name} image={item.image} url={item.url} />
+          <Grid item md={5} xs={12} xl={3} key={item.id}>
+            <SpCard title={item.name} image={item.image} url={item.url} />
           </Grid>
         ))}
         {/* ) : (
