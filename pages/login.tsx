@@ -42,7 +42,6 @@ const Login = () => {
   return (
     <LayoutLogin>
       <FormLogin onSubmit={onSubmit} />
-      <SpAlert success={mensaje.success} loading={loading} error={mensaje.error} />
     </LayoutLogin>
   )
 }

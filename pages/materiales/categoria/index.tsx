@@ -39,7 +39,7 @@ const Cursos = () => {
     <Layout>
       <SpLoading loading={loading} />
       <>{error && <p>Error: {error.message}</p>}</>
-      <SpTable name={'Categorias'} rows={data ? data.obtenerTodosCategoriaMaterial : []} onEditOronDelete={onEditOronDelete} onButtonNew={() => setOpenNew(true)} />
+      <SpTable name={'Categorias'} rows={data} onEditOronDelete={onEditOronDelete} onButtonNew={() => setOpenNew(true)} />
       {/* create  and edit*/}
       <SpModalBasic
         open={openNew || openEdit}

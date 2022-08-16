@@ -6,16 +6,16 @@ import SearchIcon from '@mui/icons-material/Search'
 
 interface Props {
   placeHolder?: string
-  onSearch?: (value: string) => void
+  onChange?: (value: any) => void
 }
 
-const InputSearch = ({ placeHolder = 'Buscar cursos' }: Props) => {
+const InputSearch = ({ placeHolder = 'Buscar cursos', onChange }: Props) => {
   return (
-    <Paper component='form' sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400,m:"10px" }}>
-      <InputBase sx={{ ml: 1, flex: 1 }} placeholder={placeHolder} inputProps={{ 'aria-label': 'search google maps' }} />
-      <IconButton type='submit' sx={{ p: '10px' }} aria-label='search'>
+    <Paper component='form' sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400, m: '10px' }}>
+      <InputBase sx={{ ml: 1, flex: 1 }} placeholder={placeHolder} inputProps={{ 'aria-label': 'search google maps' }} autoFocus onChange={onChange} />
+      {/* <IconButton type='submit' sx={{ p: '10px' }} aria-label='search'>
         <SearchIcon />
-      </IconButton>
+      </IconButton> */}
     </Paper>
   )
 }

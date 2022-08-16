@@ -2,7 +2,6 @@ import { proccessTable } from '../../Types/typeTable'
 import { dataColumns as Dc } from '../Columns'
 
 const useHeaderTable = (name: proccessTable) => {
-  console.log('Name', name)
   switch (name) {
     case 'Materiales':
       return [Dc.titulo, Dc.categoria, Dc.descripcion, Dc.acciones]

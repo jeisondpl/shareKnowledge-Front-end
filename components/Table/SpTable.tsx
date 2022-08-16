@@ -14,6 +14,7 @@ import Actions from './Actions'
 import moment from 'moment'
 import CheckIcon from '@mui/icons-material/Check'
 import AddBoxIcon from '@mui/icons-material/AddBox'
+import styleTable from './table.module.scss'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -38,13 +39,16 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 interface Props {
   rows: any[]
   name: proccessTable
+  isTitle?: boolean
   children?: JSX.Element | JSX.Element[]
   onEditOronDelete?: (row: any, proceso: string) => void
   isAccion?: boolean
   onButtonNew?: (row: any) => void
+  onSelect?: (row: any) => void
+  height?: string
 }
 
-const SpTable = ({ children, onButtonNew, name = 'Usuarios', rows, onEditOronDelete = () => {}, isAccion = true }: Props) => {
+const SpTable = ({ isTitle = true, children, onButtonNew, name = 'Usuarios', rows, onEditOronDelete = () => {}, isAccion = true, onSelect = () => {}, height = '100%' }: Props) => {
   const header = useHeaderTable(name)
 
   switch (name) {
@@ -65,12 +69,11 @@ const SpTable = ({ children, onButtonNew, name = 'Usuarios', rows, onEditOronDel
         return {
           ...row,
           creado: moment(row.creado).format('DD/MM/YYYY'),
-
           acciones: isAccion ? (
             <Actions onEditOronDelete={onEditOronDelete} id={row.id} />
           ) : (
-            <IconButton type='submit' aria-label='search' onClick={() => {}}>
-              <CheckIcon color='success' />,
+            <IconButton type='submit' aria-label='search' onClick={() => onSelect(row)}>
+              <CheckIcon color='success' />
             </IconButton>
           ),
         }
@@ -80,11 +83,13 @@ const SpTable = ({ children, onButtonNew, name = 'Usuarios', rows, onEditOronDel
 
   return (
     <>
-      <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignContent: 'center' }}>
-        <Box sx={{ flex: 'auto' }}>
-          <h1>{name}</h1>
-        </Box>
-        <Box sx={{ justifyContent: 'center' }}>
+      <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignContent: 'center', alignItems: 'center', justifyItems: 'center' }}>
+        {isTitle && (
+          <Box sx={{ flex: 'auto' }}>
+            <h1>{name}</h1>
+          </Box>
+        )}
+        <Box sx={{ justifyContent: 'center', alignContent: 'center', alignItems: 'center', justifyItems: 'center' }}>
           {onButtonNew && (
             <DialogActions>
               <Button type='submit' variant='contained' color='success' endIcon={<AddBoxIcon />} onClick={onButtonNew}>
@@ -95,16 +100,16 @@ const SpTable = ({ children, onButtonNew, name = 'Usuarios', rows, onEditOronDel
           {children}
         </Box>
       </Box>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 700 }} aria-label='customized table'>
-          <TableHead>
+      <TableContainer component={Paper} className={styleTable.table}>
+        <Table aria-label='customized table'>
+          <TableHead className={styleTable.thead}>
             <TableRow>
               {header.map((column, index) => (
                 <StyledTableCell key={index}>{column.value}</StyledTableCell>
               ))}
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody className={styleTable.tbody} style={{ height: height }}>
             {rows.map((row) => (
               <StyledTableRow key={row.id}>
                 {header.map((column, index) => (

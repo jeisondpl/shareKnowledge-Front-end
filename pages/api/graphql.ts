@@ -7,18 +7,19 @@ import { schemaUsuarios } from '../../graphQL/back/db/schemas/schemaUsuarios'
 import { schemaMaterial } from '../../graphQL/back/db/schemas/schemaMaterial';
 import { resolverUsuarios } from '../../graphQL/back/db/resolvers/resolverUsuarios'
 import { resolverMaterial } from '../../graphQL/back/db/resolvers/resolverMaterial';
-import { schemasCategoriaMaterial } from '../../graphQL/back/db/schemas/schemaCategoriaMaterial';
-import { resolverCategoriaMaterial } from '../../graphQL/back/db/resolvers/resolverCategoriaMaterial';
-import conectarDB from '../../graphQL/back/config/db'
-// import { usuario } from '../../graphQL/back/types/usuarios';
+import { schemasCategoria } from '../../graphQL/back/db/schemas/schemaCategoria';
+import { resolverCategoria } from '../../graphQL/back/db/resolvers/resolverCategoria';
+import { schemaCursos } from '../../graphQL/back/db/schemas/schemaCursos';
+import { resolverCursos } from '../../graphQL/back/db/resolvers/resolverCursos';
+import conectarDB from '../../graphQL/back/config/db';
 
 // Conectar a la base de datos
 conectarDB()
 
 // servidor
 const apolloServer = new ApolloServer({
-  typeDefs: [schemaUsuarios, schemaMaterial, schemasCategoriaMaterial],
-  resolvers: [resolverUsuarios, resolverMaterial, resolverCategoriaMaterial],
+  typeDefs: [schemaUsuarios, schemaMaterial, schemasCategoria, schemaCursos],
+  resolvers: [resolverUsuarios, resolverMaterial, resolverCategoria, resolverCursos],
   introspection: true,
   plugins: [ApolloServerPluginLandingPageGraphQLPlayground],
   context: ({ req }) => {

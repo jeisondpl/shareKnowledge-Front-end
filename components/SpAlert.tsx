@@ -7,10 +7,11 @@ interface Props {
   loading?: boolean
   success?: string
   error?: string
+  warning?: string
 }
 
-const SpAlert = ({ success, error, loading }: Props) => {
-  const style = { borderLeft: `4px solid ${success ? color.success : color.error}` }
+const SpAlert = ({ success, error, loading, warning }: Props) => {
+  const style = { borderLeft: `4px solid ${(success && color.success) || (error && color.error) || (warning && color.warning)}` }
 
   return (
     <Box
@@ -19,11 +20,17 @@ const SpAlert = ({ success, error, loading }: Props) => {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
+        marginBottom: '10px',
       }}
     >
       {success && (
         <Alert severity='success' style={style}>
           {success}
+        </Alert>
+      )}
+      {warning && (
+        <Alert severity='warning' style={style}>
+          {warning}
         </Alert>
       )}
       {error && (

@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react'
+import React, { memo, useState, useEffect, useCallback } from 'react'
 import { Formik, Form } from 'formik'
 import { Box, FormControl, IconButton, InputLabel, MenuItem, Paper, Select, styled, TextField, Grid, Button, DialogActions, Card, Typography } from '@mui/material'
 import { SchemaRegister } from './schema/SchemaRegister'
@@ -9,12 +9,12 @@ import { CatMateriales } from '../../types/Categorias'
 import SearchIcon from '@mui/icons-material/Search'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import SpModalBasic from '../SpModalBasic'
-import SpTable from '../Table/SpTable'
-import InputSearch from '../InputSearch'
 import CancelIcon from '@mui/icons-material/Cancel'
 import SaveIcon from '@mui/icons-material/Save'
 import { useMateriales, useCatMateriales } from '../../hooks'
 import { Material } from '../../types/Materiales'
+import SearchSelectTable from '../Table/SearchSelectTable'
+import * as Yup from 'yup'
 
 interface Props {
   onSubmit: (values: InputRegister) => void
@@ -37,41 +37,6 @@ interface Material2 {
   nombre: string
 }
 
-const InitialAddMateriales: Material2[] = [
-  {
-    id: '1',
-    nombre: 'React js1',
-  },
-  {
-    id: '2',
-    nombre: 'Azure storage2',
-  },
-  {
-    id: '3',
-    nombre: 'Vue js3',
-  },
-  {
-    id: '4',
-    nombre: 'Angular js4',
-  },
-  {
-    id: '5',
-    nombre: 'Node js5',
-  },
-  {
-    id: '6',
-    nombre: 'Java server 6',
-  },
-  {
-    id: '7',
-    nombre: 'Mongo db7',
-  },
-  {
-    id: '8',
-    nombre: 'Mongo db8',
-  },
-]
-
 export interface InputCurso {
   id?: string
   nombre: string
@@ -81,19 +46,24 @@ export interface InputCurso {
 }
 
 const FormCursos = ({ onSubmit, onCancel, titleBtn = 'Registrar', type = 'material' }: Props) => {
-  const [age, setAge] = useState('')
-  // const { data: dataCat, loading, error } = useQuery<{ obtenerTodosCategoriaMaterial: CatMateriales[] }, CatMateriales>(GET_ALL)
-
   //hooks get cat materiales
   const { data, loading, error } = useCatMateriales()
-
-  const { data: dataMateriales, loading: loadingMaterial, error: erroMaterial } = useMateriales()
+  const { dataMateriales } = useMateriales()
 
   const [openCategorias, setOpenCategorias] = useState(false)
   const [openMaterial, setOpenMaterial] = useState(false)
 
-  const [arrayAddMaterial, setArrayAddMaterial] = useState<Material2[]>(InitialAddMateriales)
-
+  const [arrayAddMaterial, setArrayAddMaterial] = useState<Material[]>([] as Material[])
+  const [selects, setselects] = useState([
+    {
+      name: 'selectCategoria',
+      value: '',
+    },
+    {
+      name: 'selectMaterial',
+      value: '',
+    },
+  ])
   const handleOpenModalMaterial = () => {
     setOpenMaterial(true)
   }
@@ -105,46 +75,75 @@ const FormCursos = ({ onSubmit, onCancel, titleBtn = 'Registrar', type = 'materi
     setOpenMaterial(false)
   }
 
-  const dataMaterial = ['React js', 'Azure storage', 'Vue js', '.NET es un framework', 'java']
-
   const deleteAddMaterial = (id: string) => {
-    const newArray = arrayAddMaterial.filter((item: Material2) => item.id !== id)
+    const newArray = arrayAddMaterial.filter((item: Material) => item.id !== id)
     setArrayAddMaterial(newArray)
   }
-
-  const [selects, setselects] = useState([
-    {
-      name: 'selectCategoria',
-      value: '',
-    },
-    {
-      name: 'selectMaterial',
-      value: '',
-    },
-  ])
-
-  const HandleChanqueSelect = (event: any) => {
+  const chanqueSelect = (name: string, value: string) => {
     setselects(
       selects.map((item: any) => {
-        if (item.name === event.target.name) {
-          item.value = event.target.value
+        if (item.name === name) {
+          item.value = value
         }
         return item
       })
     )
-    console.log(event.target)
+  }
+
+  const HandleChanqueSelect = (event: any) => {
+    chanqueSelect(event.target.name, event.target.value)
     if (event.target.name === 'selectMaterial') {
-      setArrayAddMaterial([...arrayAddMaterial, { id: event.target.value, nombre: event.target.value }])
+      setArrayAddMaterial([...arrayAddMaterial, { id: event.target.value, titulo: event.target.value }])
     }
   }
 
-  const InitialValueCurso: InputCurso = {
-    id: '',
-    nombre: '',
-    apellido: '',
-    email: '',
-    password: '',
+  const onSelectMaterial = useCallback(
+    (id: string): string => {
+      if (dataMateriales) {
+        const isExist = arrayAddMaterial.find((it: Material) => it.id === id)
+        const resp: Material = dataMateriales.find((it: Material) => it.id === id) as Material
+        if (!isExist) {
+          setArrayAddMaterial([...arrayAddMaterial, resp])
+          setOpenMaterial(false)
+          chanqueSelect('selectMaterial', resp.titulo)
+          return ''
+        } else {
+          return resp.titulo
+        }
+      } else return ''
+    },
+    [arrayAddMaterial]
+  )
+
+  const onSelectCatergoria = useCallback(
+    (row: any): string => {
+      chanqueSelect('selectCategoria', row.id)
+      setOpenCategorias(false)
+      return ''
+    },
+    [arrayAddMaterial]
+  )
+
+  interface FormValues {
+    id?: string
+    nombre: string
+    categoria: string
+    description: string
   }
+
+  const InitialValueCurso: FormValues = {
+    nombre: '',
+    categoria: '',
+    description: '',
+  }
+
+  const SchemaRegister = Yup.object().shape(
+    Object.assign({
+      nombre: Yup.string().required('Campo requerido'),
+      categoria: Yup.string().required('Campo requerido'),
+      description: Yup.string().required('Campo requerido'),
+    })
+  )
   return (
     <>
       <SpAlerta error={error && error.message} loading={loading} />
@@ -153,14 +152,15 @@ const FormCursos = ({ onSubmit, onCancel, titleBtn = 'Registrar', type = 'materi
         enableReinitialize={false}
         initialValues={InitialValueCurso}
         validationSchema={SchemaRegister}
-        onSubmit={(values) =>
-          onSubmit({
-            ...values,
-            rol: 'VERIFICACION',
-          })
+        onSubmit={
+          (values) => console.log(values)
+          // onSubmit({
+          //   ...values,
+          //   rol: 'VERIFICACION',
+          // })
         }
       >
-        {({ values, handleChange, handleBlur, touched, handleSubmit }) => (
+        {({ values, handleChange, handleBlur, touched, handleSubmit, errors }) => (
           <Form
             onSubmit={(e) => {
               e.preventDefault()
@@ -184,19 +184,33 @@ const FormCursos = ({ onSubmit, onCancel, titleBtn = 'Registrar', type = 'materi
                       onChange={handleChange}
                       value={values.nombre}
                     />
-                    {type === 'material' && (
-                      <FormControl fullWidth>
-                        <InputLabel id='demo-simple-select-label'>Categoria curso</InputLabel>
-                        <Select labelId='demo-simple-select-label' id='demo-simple-select' value={age} label='Age' onChange={handleChange}>
-                          {data &&
-                            data?.obtenerTodosCategoriaMaterial.map((categoria: CatMateriales) => (
-                              <MenuItem key={categoria.id} value={categoria.id}>
-                                {categoria.nombre}
-                              </MenuItem>
-                            ))}
-                        </Select>
-                      </FormControl>
-                    )}
+                    <TextField
+                      className='form-control'
+                      label='Categoria'
+                      fullWidth
+                      id='categoria'
+                      name='categoria'
+                      variant='outlined'
+                      value={values.categoria}
+                      error={Boolean(touched.categoria && errors.categoria)}
+                      helperText={touched.categoria ? errors.categoria : ''}
+                      type='text'
+                      select
+                      SelectProps={{ native: true }}
+                      inputProps={{
+                        style: {
+                          borderColor: '#019df4',
+                        },
+                      }}
+                      onChange={handleChange}
+                    >
+                      <option key={0} value='' />
+                      {dataMateriales?.map((item: Material) => (
+                        <option key={item.id} value={item.id}>
+                          {item.titulo}
+                        </option>
+                      ))}
+                    </TextField>
 
                     <Grid container spacing={2}>
                       <Grid item xs={12} sm={6}>
@@ -215,17 +229,18 @@ const FormCursos = ({ onSubmit, onCancel, titleBtn = 'Registrar', type = 'materi
                                 name='selectCategoria'
                                 id='demo-simple-select'
                                 value={selects[0].value}
-                                label='Age'
+                                label='Categoria material'
                                 onChange={HandleChanqueSelect}
                               >
                                 {data &&
-                                  data?.obtenerTodosCategoriaMaterial.map((categoria: CatMateriales) => (
-                                    <MenuItem key={categoria.id} value={categoria.id}>
-                                      {categoria.nombre}
+                                  data?.map((item: CatMateriales) => (
+                                    <MenuItem key={item.id} value={item.id}>
+                                      {item.nombre}
                                     </MenuItem>
                                   ))}
                               </Select>
                             </FormControl>
+
                             <IconButton type='submit' sx={{ p: '10px' }} aria-label='search' onClick={handleOpenModal}>
                               <SearchIcon />
                             </IconButton>
@@ -246,19 +261,19 @@ const FormCursos = ({ onSubmit, onCancel, titleBtn = 'Registrar', type = 'materi
                               <Select
                                 labelId='demo-simple-select-label'
                                 id='demo-simple-select'
-                                name='selectMaterial'
-                                value={selects[1].value}
-                                label='Age'
-                                onChange={HandleChanqueSelect}
+                                name='material'
+                                label='Material'
+                                onChange={(e: any) => onSelectMaterial(e.target.value)}
                               >
                                 {dataMateriales &&
-                                  dataMateriales?.obtenerTodosMateriales.map((categoria: Material) => (
-                                    <MenuItem key={categoria.id} value={categoria.titulo}>
-                                      {categoria.titulo}
+                                  dataMateriales?.map((item: Material) => (
+                                    <MenuItem key={item.id} value={item.id}>
+                                      {item.titulo}
                                     </MenuItem>
                                   ))}
                               </Select>
                             </FormControl>
+
                             <IconButton type='submit' sx={{ p: '10px' }} aria-label='search' onClick={handleOpenModalMaterial}>
                               <SearchIcon />
                             </IconButton>
@@ -267,7 +282,7 @@ const FormCursos = ({ onSubmit, onCancel, titleBtn = 'Registrar', type = 'materi
                       </Grid>
                     </Grid>
 
-                    {arrayAddMaterial && (
+                    {arrayAddMaterial.length > 0 && (
                       <Box
                         mt={'10px'}
                         sx={{
@@ -284,7 +299,7 @@ const FormCursos = ({ onSubmit, onCancel, titleBtn = 'Registrar', type = 'materi
                         </InputLabel>
                         <Grid container>
                           {arrayAddMaterial &&
-                            arrayAddMaterial.map((material: Material2) => (
+                            arrayAddMaterial.map((material: Material) => (
                               <Box
                                 key={material.id}
                                 sx={{
@@ -298,7 +313,7 @@ const FormCursos = ({ onSubmit, onCancel, titleBtn = 'Registrar', type = 'materi
                                 }}
                               >
                                 <Typography variant='h6' component='div' gutterBottom>
-                                  {material.nombre}
+                                  {material.titulo}
                                 </Typography>
 
                                 <IconButton type='submit' aria-label='search' style={{ color: '#CF7C89' }} onClick={() => deleteAddMaterial(material.id)}>
@@ -350,16 +365,14 @@ const FormCursos = ({ onSubmit, onCancel, titleBtn = 'Registrar', type = 'materi
         )}
       </Formik>
 
-      <SpModalBasic open={openCategorias} title={''} width={800} onClose={handleOnClose}>
-        <SpTable name={'Categorias'} rows={data ? data.obtenerTodosCategoriaMaterial : []} onEditOronDelete={() => {}} isAccion={false}>
-          <InputSearch placeHolder={'Buscar Categoria'} />
-        </SpTable>
+      {/* buscar Categorias */}
+      <SpModalBasic open={openCategorias} title={'Categoria'} width={800} onClose={handleOnClose}>
+        <SearchSelectTable name='Categorias' data={data ? data : []} onSelectMaterial={onSelectCatergoria} />
       </SpModalBasic>
 
-      <SpModalBasic open={openMaterial} title={''} width={800} onClose={handleOnClose}>
-        <SpTable name={'Materiales'} rows={dataMateriales ? dataMateriales.obtenerTodosMateriales : []} onEditOronDelete={() => {}} isAccion={false}>
-          <InputSearch placeHolder={'Buscar Categoria'} />
-        </SpTable>
+      {/* buscar Materiales */}
+      <SpModalBasic open={openMaterial} title={'Materiales'} width={800} onClose={handleOnClose}>
+        <SearchSelectTable name='Materiales' data={dataMateriales ? dataMateriales : []} onSelectMaterial={onSelectMaterial} />
       </SpModalBasic>
     </>
   )

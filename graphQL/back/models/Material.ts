@@ -25,7 +25,7 @@ const MaterialSchema = mongoose.Schema({
     categoria: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: 'CategoriaMaterial'
+        ref: 'Categoria'
     },
 
     creado: {

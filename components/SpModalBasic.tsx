@@ -37,7 +37,7 @@ export default function SpModalBasic({ open, onClose = () => {}, children, title
               <CloseIcon sx={{ marginLeft: '10px' }} />
             </IconButton>
           </DialogActions>
-          <h2 id='parent-modal-title'>{title}</h2>
+          <Box sx={{ fontSize: 25, fontWeight: 'bold' }}>{title}</Box>
           {children}
         </Box>
       </Modal>

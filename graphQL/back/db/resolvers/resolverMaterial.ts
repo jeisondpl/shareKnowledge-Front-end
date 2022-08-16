@@ -1,16 +1,10 @@
 import Material from '../../models/Material'
+import { IMaterial } from '../../types/material'
 require('dotenv').config({ path: '.env' })
 
 
 interface InputNuevoMaterial {
-  input: {
-    titulo: string
-    descripcion: string
-    url: string
-    creado: string
-    usuario: string
-    categoria: string
-  }
+  input: IMaterial
 }
 
 // Resolvers de Material
@@ -18,7 +12,7 @@ export const resolverMaterial = {
   Query: {
     obtenerMaterial: async (_: any, { id }: { id: string }) => {
       // revisar si el Material existe o no
-      const material = await Material.findById(id)
+      const material: IMaterial = await Material.findById(id)
 
       if (!material) {
         throw new Error('Material no encontrado')
@@ -29,10 +23,10 @@ export const resolverMaterial = {
     obtenerTodosMateriales: async (_: any, { }, ctx: any) => {
       try {
         if (ctx.usuario.rol === 'ADMINISTRADOR') {
-          const material = await Material.find({})
+          const material: IMaterial = await Material.find({})
           return material
         } else {
-          const material = await Material.find({ usuario: ctx.usuario.id })
+          const material: IMaterial = await Material.find({ usuario: ctx.usuario.id })
           return material
         }
       } catch (error) {
@@ -41,7 +35,7 @@ export const resolverMaterial = {
     },
     obtenerCursosEstudiantes: async (_: any, { }) => {
       try {
-        const material = await Material.find({})
+        const material: IMaterial = await Material.find({})
         return material
       } catch (error) {
         throw new Error('Error el obtener los materiales ERROR:' + error)
@@ -50,7 +44,7 @@ export const resolverMaterial = {
     obtenerCursosPorDocente: async (_: any, { }, ctx: any) => {
       try {
         if (ctx.usuario.rol === 'DOCENTE') {
-          const material = await Material.find({ usuario: ctx.usuario.id })
+          const material: IMaterial = await Material.find({ usuario: ctx.usuario.id })
           return material
         } else {
           throw new Error('No tiene el rol de docente')
@@ -65,12 +59,10 @@ export const resolverMaterial = {
       console.log("Jeison", ctx.usuario)
 
 
-
-
       const { titulo } = input
       // Revisar si ya esta registrado
-      const existeUsuario = await Material.findOne({ titulo })
-      if (existeUsuario) {
+      const existeMaterial: IMaterial = await Material.findOne({ titulo })
+      if (existeMaterial) {
         throw new Error('El Material ya esta registrado')
       }
 
