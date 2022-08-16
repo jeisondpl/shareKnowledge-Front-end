@@ -38,7 +38,7 @@ export interface PRops {
   children?: React.ReactNode
 }
 
-interface Menus {
+interface Menu {
   id: number
   name: string
   url: string
@@ -46,7 +46,7 @@ interface Menus {
   image: string
 }
 
-export const MENU: Menus[] = [
+export const MENU: Menu[] = [
   {
     id: 1,
     name: 'Inicio',
