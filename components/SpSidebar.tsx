@@ -38,7 +38,7 @@ export interface PRops {
   children?: React.ReactNode
 }
 
-interface Menu {
+interface Menus {
   id: number
   name: string
   url: string
@@ -46,7 +46,7 @@ interface Menu {
   image: string
 }
 
-export const MENU: Menu[] = [
+export const MENU: Menus[] = [
   {
     id: 1,
     name: 'Inicio',
@@ -54,7 +54,6 @@ export const MENU: Menu[] = [
     icon: <HomeIcon />,
     image: 'https://fasican.org/wp-content/uploads/2015/05/home-icon.png',
   },
-
   {
     id: 2,
     name: 'Usuarios',
@@ -83,7 +82,6 @@ export const MENU: Menu[] = [
     icon: <CategoryIcon />,
     image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNTT6j2b3btiGoSaXxbEJRXXegW6zGQ5VlMsESvKOweTij1LzYI2bRKwSTpsME4QkvLAI&usqp=CAU',
   },
-  ,
   {
     id: 6,
     name: 'Crear cursos',
