@@ -2,17 +2,20 @@ import { gql } from 'apollo-server-micro'
 
 // Schema
 export const schemaMaterial = gql`
+
 type Material {
   id: ID
-  titulo: String
+  nombre: String
+  url: String
   descripcion: String
   creado: String
   usuario: ID
   categoria: ID
 }
 
+
 input MaterialInput {
-  titulo: String!
+  nombre: String!
   descripcion: String
   url: String
   creado: String
@@ -20,10 +23,29 @@ input MaterialInput {
   categoria: String
 }
 
+type paguinateMateriales {
+  docs: [Material]
+  totalDocs: String,
+  limit: String,
+  totalPages: String,
+  page: String,
+  pagingCounter: String,
+  hasPrevPage: Boolean,
+  hasNextPage: Boolean,
+  prevPage: String,
+  nextPage: String
+}
+
+input PaguinateInputMateriales {
+  pageIndex: Int
+  pageSize: Int
+  globalFilter: String
+}
+
 type Query {
   #Materiales
   obtenerMaterial(id: ID!): Material
-  obtenerTodosMateriales: [Material]
+  obtenerTodosMateriales(input: PaguinateInputMateriales): paguinateMateriales
   obtenerCursosEstudiantes: [Material]
   obtenerCursosPorDocente: [Material]
 

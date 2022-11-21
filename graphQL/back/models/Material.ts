@@ -1,8 +1,8 @@
 const mongoose = require('mongoose')
-
+const mongoosePaginate = require('mongoose-paginate-v2')
 
 const MaterialSchema = mongoose.Schema({
-    titulo: {
+    nombre: {
         type: String,
         required: true,
         trim: true,
@@ -17,7 +17,8 @@ const MaterialSchema = mongoose.Schema({
         required: true,
         trim: true,
     },
-    usuario: {
+    usuario:
+    {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: 'Usuario',
@@ -33,7 +34,7 @@ const MaterialSchema = mongoose.Schema({
         default: Date.now(),
     },
 })
-
+MaterialSchema.plugin(mongoosePaginate)
 const Material = mongoose.models.Material || mongoose.model('Material', MaterialSchema)
 
 export default Material

@@ -8,9 +8,11 @@ import { InputRegister } from '../../types/Usuario'
 interface Props {
   onSubmit: (values: InputRegister) => void
   titleBtn?: string
+  selectData?: any
 }
 
-const FormRegister = ({ onSubmit, titleBtn = 'Registrar' }: Props) => {
+const FormRegister = ({ onSubmit, titleBtn = 'Registrar', selectData }: Props) => {
+  console.log('selectData :', selectData)
   return (
     <Formik
       enableReinitialize={false}

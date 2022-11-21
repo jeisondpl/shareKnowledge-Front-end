@@ -1,4 +1,5 @@
 import Usuario from '../../models/Usuario'
+import { InputUserPaginate } from '../../types/paginate'
 import { usuario } from '../../types/usuarios'
 const bcryptjs = require('bcryptjs')
 const jwt = require('jsonwebtoken')
@@ -20,6 +21,8 @@ interface InputNuevoUsuario {
 }
 
 
+
+
 const crearToken = ({ usuario, secreta, expiresIn }: PropTokens) => {
   const { id, email, nombre, apellido, rol } = usuario
   return jwt.sign({ id, email, nombre, apellido, rol }, secreta, { expiresIn })
@@ -32,14 +35,24 @@ export const resolverUsuarios = {
     obtenerUsuario: async (_: any, { }, ctx: any) => {
       return ctx.usuario
     },
-    obtenerTodosUsuarios: async (_: any, { }, ctx: any) => {
-      console.log(ctx.usuario.rol)
+    obtenerTodosUsuarios: async (_: any, { input }: InputUserPaginate, ctx: any) => {
+
+      const { pageIndex, pageSize, globalFilter } = input
 
       if (ctx.usuario.rol !== 'ADMINISTRADOR') {
         throw new Error('No tiene el rol de Administrador')
       }
       try {
-        const usuario = await Usuario.find({})
+
+        const usuario = await Usuario.paginate({
+          $or: [
+            { nombre: { $regex: globalFilter, $options: 'i' } },
+            { apellido: { $regex: globalFilter, $options: 'i' } },
+            { email: { $regex: globalFilter, $options: 'i' } },
+            { rol: { $regex: globalFilter, $options: 'i' } },
+          ]
+        },
+          { limit: pageSize, page: pageIndex })
         return usuario
       } catch (error) {
         console.log(error)
@@ -105,6 +118,7 @@ export const resolverUsuarios = {
           expiresIn: '8h'
         }),
         user: existeUsuario,
+        permissions: ["CURSOS", "MATERIALES", "USUARIOS"]
       }
     },
     actualizarUsuario: async (_: any, { id, input }: { id: string, input: string }, ctx: any) => {

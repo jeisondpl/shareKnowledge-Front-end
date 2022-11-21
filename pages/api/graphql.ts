@@ -23,6 +23,7 @@ const apolloServer = new ApolloServer({
   introspection: true,
   plugins: [ApolloServerPluginLandingPageGraphQLPlayground],
   context: ({ req }) => {
+
     const token = req.headers['authorization'] || ''
     if (token) {
       try {
@@ -30,10 +31,13 @@ const apolloServer = new ApolloServer({
           usuario: jwt.verify(token.replace('Bearer ', ''), process.env.SECRETA)
         }
       } catch (error) {
-        console.log('Hubo un error al verificar el token')
         console.log(error)
+        throw new Error('usuario no autenticado o token no es valido1s')
       }
     }
+    // else {
+    //   throw new Error('usuario no autenticado o token no es valido2s')
+    // }
   },
 
 })

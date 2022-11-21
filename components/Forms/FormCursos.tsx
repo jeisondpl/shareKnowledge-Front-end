@@ -4,7 +4,7 @@ import { Box, FormControl, IconButton, InputLabel, MenuItem, Paper, Select, styl
 import { SchemaRegister } from './schema/SchemaRegister'
 import TextareaAutosize from '@mui/material/TextareaAutosize'
 import { InputRegister } from '../../types/Usuario'
-import SpAlerta from '../SpAlert'
+import SpAlert from '../SpAlert'
 import { CatMateriales } from '../../types/Categorias'
 import SearchIcon from '@mui/icons-material/Search'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
@@ -146,7 +146,7 @@ const FormCursos = ({ onSubmit, onCancel, titleBtn = 'Registrar', type = 'materi
   )
   return (
     <>
-      <SpAlerta error={error && error.message} loading={loading} />
+      <SpAlert error={error && error.message} loading={loading} />
 
       <Formik
         enableReinitialize={false}

@@ -1,0 +1,1 @@
+export type nameComponents = 'Materiales' | 'Categorias de materiales' | 'Usuarios' 

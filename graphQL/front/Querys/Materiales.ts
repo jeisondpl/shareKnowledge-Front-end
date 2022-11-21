@@ -1,15 +1,27 @@
 import { gql } from "@apollo/client";
 
 export const GET_ALL = gql`
-  query obtenerTodosMateriales {
-    obtenerTodosMateriales {
-      id
-      titulo
-      categoria
-      descripcion
-      usuario
-    } 
+query obtenerTodosMateriales ($input: PaguinateInputMateriales){
+  obtenerTodosMateriales (input: $input){
+      docs {   
+        id
+        nombre
+        descripcion
+        url
+        categoria
+        usuario
+      }
+      totalDocs
+      limit
+      totalPages
+      page
+      pagingCounter
+      hasPrevPage
+      hasNextPage
+      prevPage
+      nextPage
   }
+}
 `
 
 
@@ -17,7 +29,7 @@ export const GET_ALL_DOCENTE = gql`
 query ObtenerCursosPorDocente {
   obtenerCursosPorDocente {
     id
-    titulo
+    nombre
     descripcion
     creado
     usuario

@@ -1,11 +1,11 @@
 import React, { useCallback } from 'react'
-import Layout from '../../layout/Layout'
-import { FormLoadMaterial } from '../../components'
+import Layout from '../../../layout/Layout'
+import { FormLoadMaterial } from '../../../components'
 import { Box, Card, Grid, Button, DialogActions } from '@mui/material'
 import { useRouter } from 'next/router'
 import SaveIcon from '@mui/icons-material/Save'
 import CancelIcon from '@mui/icons-material/Cancel'
-import { dev } from '../../components/utils/oops'
+import { dev } from '../../../components/utils/oops'
 
 const Nuevomaterial = () => {
   const router = useRouter()

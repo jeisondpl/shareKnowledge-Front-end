@@ -7,6 +7,8 @@ import Typography from '@mui/material/Typography'
 import Link from 'next/link'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import moment from 'moment'
+import { Grid } from '@mui/material'
+import SpTitle from './SpTitle'
 
 interface Props {
   title: string
@@ -17,46 +19,33 @@ interface Props {
 
 export default function SpCard({ title, image, url = '/', descripcion }: Props) {
   return (
-    <span style={{ cursor: 'pointer' }}>
+    <Box style={{ cursor: 'pointer' }}>
       <Link href={url}>
-        <Card sx={{ p: 3 }}>
-          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-            <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-              <Box>
-                <Typography component='div' variant='h4'>
-                  {title}
-                </Typography>
-                <Typography variant='subtitle1' color='text.secondary' component='div'>
-                  {descripcion ? descripcion : `Actualizado ${moment(Date.now()).format('DD MMM YYYY')}`}
-                </Typography>
-              </Box>
-
-              <Box sx={{ display: 'flex', ml: 10, justifyContent: 'end', alignContent: 'end', alignItems: 'end' }}>
+        <Card sx={{ p: 5, height: '300px' }}>
+          <Grid container spacing={3}>
+            <Grid item md={12} xs={12} xl={12}>
+              <SpTitle title={title} variant='h4' />
+              <SpTitle title={descripcion ? descripcion : `Actualizado ${moment(Date.now()).format('DD MMM YYYY')}`} variant='subtitle1' color='text.secondary' />
+            </Grid>
+            <Grid item md={12} xs={12} xl={12} sx={{ display: 'flex', justifyContent: 'center' }}>
+              <>
                 {image && (
                   <CardMedia
                     component='img'
                     style={{
-                      width: 'auto',
-                      maxHeight: '200px',
-                      paddingBottom: '20px',
+                      width: '100px',
+                      height: '100px',
                       opacity: '.2',
-                      marginTop: '20px',
                     }}
                     image={image}
                     alt='Live from space album cover'
                   />
                 )}
-              </Box>
-            </Box>
-
-            <Box sx={{ display: 'flex' }}>
-              <IconButton aria-label='play/pause'>
-                <VisibilityIcon color='success' />
-              </IconButton>
-            </Box>
-          </Box>
+              </>
+            </Grid>
+          </Grid>
         </Card>
       </Link>
-    </span>
+    </Box>
   )
 }

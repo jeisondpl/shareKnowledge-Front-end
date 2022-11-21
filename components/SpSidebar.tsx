@@ -33,7 +33,6 @@ import MenuBookIcon from '@mui/icons-material/MenuBook'
 import SchoolIcon from '@mui/icons-material/School'
 import CategoryIcon from '@mui/icons-material/Category'
 import color from '../Themes/Color'
-import SpAlert from './SpAlert'
 export interface PRops {
   children?: React.ReactNode
 }
@@ -59,7 +58,8 @@ export const MENU: Menu[] = [
     name: 'Usuarios',
     url: '/usuarios',
     icon: <PersonIcon />,
-    image: 'https://cdn.icon-icons.com/icons2/936/PNG/512/user-shape_icon-icons.com_73346.png',
+    image:
+      'https://static.vecteezy.com/system/resources/previews/008/302/512/non_2x/eps10-grey-user-solid-icon-or-logo-in-simple-flat-trendy-modern-style-isolated-on-white-background-free-vector.jpg',
   },
   {
     id: 3,
@@ -75,20 +75,13 @@ export const MENU: Menu[] = [
     icon: <SchoolIcon />,
     image: 'https://cdn-icons-png.flaticon.com/512/5885/5885260.png',
   },
-  {
-    id: 5,
-    name: 'Categoria materiales',
-    url: '/materiales/categoria',
-    icon: <CategoryIcon />,
-    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNTT6j2b3btiGoSaXxbEJRXXegW6zGQ5VlMsESvKOweTij1LzYI2bRKwSTpsME4QkvLAI&usqp=CAU',
-  },
-  {
-    id: 6,
-    name: 'Crear cursos',
-    url: '/cursos/nuevo',
-    icon: <MenuBookIcon />,
-    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNTT6j2b3btiGoSaXxbEJRXXegW6zGQ5VlMsESvKOweTij1LzYI2bRKwSTpsME4QkvLAI&usqp=CAU',
-  },
+  // {
+  //   id: 6,
+  //   name: 'Crear cursos',
+  //   url: '/cursos/nuevo',
+  //   icon: <MenuBookIcon />,
+  //   image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNTT6j2b3btiGoSaXxbEJRXXegW6zGQ5VlMsESvKOweTij1LzYI2bRKwSTpsME4QkvLAI&usqp=CAU',
+  // },
 ]
 const settings = ['Cerrar sesion']
 
@@ -163,16 +156,16 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 const SpSidebar = ({ children }: PRops) => {
   const router = useRouter()
-  const token = useSelector((state: RootState) => state.auth.token)
-  const [view, setView] = useState(true)
+  // const token = useSelector((state: RootState) => state.auth.token)
+  // const [view, setView] = useState(true)
 
-  useEffect(() => {
-    if (!token) {
-      router.push('/login')
-    } else {
-      setView(false)
-    }
-  }, [router])
+  // useEffect(() => {
+  //   if (!token) {
+  //     router.push('/login')
+  //   } else {
+  //     setView(false)
+  //   }
+  // }, [router, token])
 
   const user = useSelector((state: RootState) => state.auth.user)
   const dispatch = useDispatch()
@@ -210,7 +203,6 @@ const SpSidebar = ({ children }: PRops) => {
     router.push(url)
   }
 
-  if (view) return <SpAlert loading={view} />
 
   return (
     <Box sx={{ display: 'flex' }}>

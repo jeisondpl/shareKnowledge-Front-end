@@ -1,4 +1,5 @@
 import Categoria from '../../models/Categoria'
+import { InputUserPaginate } from '../../types/paginate'
 require('dotenv').config({ path: '.env' })
 
 
@@ -9,6 +10,8 @@ interface InputNuevoCategoria {
     creado: string
   }
 }
+
+
 
 // Resolvers de Categoria
 export const resolverCategoria = {
@@ -23,17 +26,22 @@ export const resolverCategoria = {
 
       return categoria
     },
-    obtenerTodosCategoria: async (_: any, { }, ctx: any) => {
-      console.log(ctx.usuario.rol)
+    obtenerTodosCategoria: async (_: any, { input }: InputUserPaginate) => {
       try {
-        if (ctx.usuario.rol === 'ADMINISTRADOR') {
-          const categoria = await Categoria.find({})
-          return categoria
-        } else {
-          throw new Error('Rol no es administrador')
-        }
+        const { pageIndex, pageSize, globalFilter } = input
+        const Categorias: any = await Categoria.paginate({
+          $or: [
+            { titulo: { $regex: globalFilter, $options: 'i' } },
+            { descripcion: { $regex: globalFilter, $options: 'i' } },
+            { url: { $regex: globalFilter, $options: 'i' } },
+          ]
+        },
+          { limit: pageSize, page: pageIndex })
+        console.log("=>=>Categoria=>=>", Categorias)
+        return Categorias
+
       } catch (error) {
-        throw new Error('Error el obtener las categoorias ERROR:' + error)
+        throw new Error('Error el obtener los materiales ERROR:' + error)
       }
     },
   },

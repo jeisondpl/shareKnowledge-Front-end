@@ -1,57 +1,37 @@
-import React, { useCallback, useState } from 'react'
 import Layout from '../layout/Layout'
-import { useQuery } from '@apollo/client'
-import SpTable from '../components/Table/SpTable'
+import { useLazyQuery } from '@apollo/client'
 import { GET_ALL } from '../graphQL/front/Querys/Usuarios'
-import { InputRegister, UsuariosDataAll } from '../types/Usuario'
-import { useRouter } from 'next/router'
+import { UsuariosDataAll } from '../types/Usuario'
 import SpModalBasic from '../components/SpModalBasic'
 import FormRegister from '../components/Forms/FormRegister'
 import SpDialog from '../components/SpDialog'
-import SpAlerta from '../components/SpAlert'
+import { SpAlert, SpTitle } from '../components'
+import { ITableParams } from '../components/SPTable/Types/ITable'
+import SpTableMaterial, { operaciones } from '../components/SPTable'
+import useHandle from './commons/hooks/useHandle'
+import { nameComponents } from '../types/Columns'
+
+const name: nameComponents = 'Usuarios'
 
 const Usuarios = () => {
-  const router = useRouter()
-  const { data, loading, error } = useQuery<UsuariosDataAll, InputRegister>(GET_ALL)
-  const [openEdit, setOpenEdit] = useState(false)
-  const [openDelete, setOpenDelete] = useState(false)
-  const [usuario, setUsuario] = useState<string>()
-
-  const onEditOronDelete = useCallback(
-    (rowData: any, proceso: string) => {
-      if (proceso === 'edit') {
-        setOpenEdit(true)
-      }
-      if (proceso === 'delete') {
-        setOpenDelete(true)
-      }
-      setUsuario(rowData)
-    },
-    [router]
-  )
-
-  const onSubmit = useCallback((rowData: any) => {
-    console.log('id old: ', usuario)
-    console.log('new data: ', rowData)
-    setOpenEdit(false)
-    setUsuario(undefined)
-  }, [])
-
-  const handleDelete = () => {
-    console.log('ejecutar delete :', usuario)
-    setOpenDelete(false)
-    setUsuario(undefined)
-  }
+  const get = useLazyQuery<UsuariosDataAll, { input: ITableParams }>(GET_ALL)
+  const { state, loading, error, dispatch, handleDelete, onSubmit, fetchData, handleTable } = useHandle({ get, name })
 
   return (
     <Layout>
-      <SpAlerta error={error && error.message} loading={loading} />
-      <SpTable name={'Usuarios'} rows={data ? data.obtenerTodosUsuarios : []} onButtonNew={() => setOpenEdit(true)} onEditOronDelete={onEditOronDelete} />
-      {/* create */}
-      <SpModalBasic open={openEdit} title={'Crear usuario'} onClose={() => setOpenEdit(false)}>
-        <FormRegister onSubmit={onSubmit} titleBtn='Crear' />
+      <SpTitle title={'Usuarios'} variant='h4' />
+      <SpAlert error={error?.message} loading={loading} />
+      <SpTableMaterial name={name} fetchData={fetchData} handle={(row: any, op: operaciones) => handleTable(row, op)} />
+      <SpModalBasic open={state.openModal} title={state.selectData ? 'Editar usuario' : 'Crear usuario'} onClose={() => dispatch({ type: 'openModal', payload: false })}>
+        <FormRegister onSubmit={onSubmit} titleBtn={state.selectData ? 'Actualizar' : 'Crear'} selectData={state.selectData} />
       </SpModalBasic>
-      <SpDialog open={openDelete} title={'Eliminar'} description={'¿Desea eliminar este registro?'} onCancel={() => setOpenDelete(false)} onSubmit={handleDelete} />
+      <SpDialog
+        open={state.openDelete}
+        title={'Eliminar'}
+        description={'¿Desea eliminar este registro?'}
+        onCancel={() => dispatch({ type: 'openDelete', payload: false })}
+        onSubmit={handleDelete}
+      />
     </Layout>
   )
 }

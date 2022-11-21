@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 
+const mongoosePaginate = require('mongoose-paginate-v2')
 
 const UsuariosSchema = mongoose.Schema({
   nombre: {
@@ -33,6 +34,9 @@ const UsuariosSchema = mongoose.Schema({
     default: Date.now(),
   },
 })
+
+UsuariosSchema.plugin(mongoosePaginate)
+
 
 const Usuario = mongoose.models.Usuario || mongoose.model('Usuario', UsuariosSchema)
 

@@ -5,21 +5,23 @@ import { InitialValueRegister, SchemaRegister } from './schema/SchemaRegister'
 import TextareaAutosize from '@mui/material/TextareaAutosize'
 import SpUploadFile from '../../components/SpUploadFile'
 import { useQuery } from '@apollo/client'
-import { InputRegister, UsuariosDataAll } from '../../types/Usuario'
-import { GET_ALL_DOCENTE } from '../../graphQL/front/Querys/Usuarios'
-import SpAlerta from '../SpAlert'
+import { InputRegister } from '../../types/Usuario'
+import SpAlert from '../SpAlert'
 import { CatMateriales } from '../../types/Categorias'
-import { GET_ALL } from '../../graphQL/front/Querys/CatMateriales'
+import { GET_ALL } from '../../graphQL/front/Querys/CatMateriales' 
 
 interface Props {
   onSubmit: (values: InputRegister) => void
   onCancel: () => void
   titleBtn?: string
   type?: 'categoria' | 'material'
+  selectData?: CatMateriales
 }
 
-const FormLoad = ({ onSubmit, onCancel, titleBtn = 'Registrar', type = 'material' }: Props) => {
+const FormLoad = ({ onSubmit, onCancel, titleBtn = 'Registrar', type = 'material',selectData }: Props) => {
   const [age, setAge] = useState('')
+
+  
   const { data: dataCat, loading, error } = useQuery<{ obtenerTodosCategoriaMaterial: CatMateriales[] }, CatMateriales>(GET_ALL)
 
   const handleChange = (event: SelectChangeEvent) => {
@@ -28,7 +30,7 @@ const FormLoad = ({ onSubmit, onCancel, titleBtn = 'Registrar', type = 'material
 
   return (
     <>
-      <SpAlerta error={error && error.message} loading={loading} />
+      <SpAlert error={error && error.message} loading={loading} />
 
       <Formik
         enableReinitialize={false}

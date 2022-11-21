@@ -4,12 +4,14 @@ import { Button, Checkbox, FormControlLabel, TextField } from '@mui/material'
 import FormErrorMessage from './FormMessageError'
 import { SchemaLogin, InitialValueLogin } from './schema/SchemaLogin'
 import { InputLogin } from '../../types/Usuario'
+import SpLoading from '../SpLoading'
 
 interface Props {
   onSubmit: (values: InputLogin) => void
+  loading: boolean
 }
 
-const FormLogin = ({ onSubmit }: Props) => {
+const FormLogin = ({ onSubmit,loading }: Props) => {
   return (
     <Formik enableReinitialize={false} initialValues={InitialValueLogin} validationSchema={SchemaLogin} onSubmit={(values) => onSubmit(values)}>
       {({ values, errors, handleChange, handleSubmit, handleBlur, touched }) => (
@@ -46,8 +48,8 @@ const FormLogin = ({ onSubmit }: Props) => {
             <FormErrorMessage nameField={'password'} error={errors} touched={touched} />
             <div></div>
             <FormControlLabel control={<Checkbox value='remember' color='primary' />} label='Recordar' />
-            <Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
-              Iniciar sesión
+            <Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }} endIcon={loading && <SpLoading loading={true} color='inherit' />}>
+              {!loading && 'Iniciar sesión'}
             </Button>
           </>
         </Form>

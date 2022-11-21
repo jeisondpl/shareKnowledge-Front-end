@@ -1,4 +1,4 @@
-import { CircularProgress } from '@mui/material'
+import { CircularProgress, Grid } from '@mui/material'
 import React from 'react'
 import color from '../Themes/Color'
 
@@ -10,7 +10,11 @@ interface Props {
 }
 
 const SpLoading = ({ loading, color = 'primary' }: Props) => {
-  return <>{loading && <CircularProgress color={color} />}</>
+  return (
+    <Grid container spacing={0} direction='column' alignItems='center' justifyContent='center'>
+      {loading && <CircularProgress color={color}  />}
+    </Grid>
+  )
 }
 
 export default SpLoading

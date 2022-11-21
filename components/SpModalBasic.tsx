@@ -1,7 +1,6 @@
 import * as React from 'react'
 import Box from '@mui/material/Box'
 import Modal from '@mui/material/Modal'
-import Button from '@mui/material/Button'
 import { DialogActions, IconButton } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 
@@ -27,7 +26,7 @@ interface Props {
   width?: number
 }
 
-export default function SpModalBasic({ open, onClose = () => {}, children, title, width = 400 }: Props) {
+const SpModalBasic = ({ open, onClose = () => {}, children, title, width = 400 }: Props) => {
   return (
     <div>
       <Modal open={open} onClose={onClose} aria-labelledby='parent-modal-title' aria-describedby='parent-modal-description'>
@@ -44,3 +43,5 @@ export default function SpModalBasic({ open, onClose = () => {}, children, title
     </div>
   )
 }
+
+export default SpModalBasic

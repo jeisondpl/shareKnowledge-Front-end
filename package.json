@@ -6,16 +6,16 @@
     "dev": "next dev",
     "prod": "env-cmd -f .env.prod next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "next start ",
     "lint": "next lint"
   },
   "dependencies": {
     "@apollo/client": "^3.6.9",
     "@azure/storage-blob": "^12.11.0",
-    "@emotion/react": "^11.9.3",
-    "@emotion/styled": "^11.9.3",
-    "@mui/icons-material": "^5.8.4",
-    "@mui/material": "^5.9.0",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@mui/icons-material": "^5.10.9",
+    "@mui/material": "^5.10.13",
     "@reduxjs/toolkit": "^1.8.3",
     "apollo-link-context": "^1.0.20",
     "apollo-server-core": "^3.10.0",
@@ -25,13 +25,16 @@
     "cross-fetch": "^3.1.5",
     "dotenv": "^16.0.1",
     "env-cmd": "^10.1.0",
+    "eslint-plugin-react-hooks": "^5.0.0-next-d1e35c703-20221110",
     "formik": "^2.2.9",
     "graphql": "^16.5.0",
     "jsonwebtoken": "^8.5.1",
+    "material-react-table": "^1.3.8",
     "micro": "^9.4.1",
     "micro-cors": "^0.1.1",
     "moment": "^2.29.4",
     "mongoose": "^5.9.7",
+    "mongoose-paginate-v2": "^1.7.1",
     "next": "12.2.2",
     "node-fetch": "^3.2.9",
     "react": "18.2.0",
@@ -40,6 +43,7 @@
     "react-player": "^2.10.1",
     "react-redux": "^8.0.2",
     "redux": "^4.2.0",
+    "redux-persist": "^6.0.0",
     "redux-thunk": "^2.4.1",
     "sweetalert2": "^11.4.26",
     "yup": "^0.32.11"
@@ -52,5 +56,14 @@
     "eslint-config-next": "12.2.2",
     "sass": "^1.54.3",
     "typescript": "4.7.4"
+  },
+  "eslintConfig": {
+    "plugins": [
+      "react-hooks"
+    ],
+    "rules": {
+      "react-hooks/rules-of-hooks": "off",
+      "react-hooks/exhaustive-deps": "off"
+    }
   }
 }

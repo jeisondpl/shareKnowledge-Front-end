@@ -1,58 +1,36 @@
-import React, { useCallback, useState } from 'react'
-import SpLoading from '../../../components/SpLoading'
 import Layout from '../../../layout/Layout'
-import SpTable from '../../../components/Table/SpTable'
-import { useRouter } from 'next/router'
-import SpModalBasic from '../../../components/SpModalBasic'
-import { FormLoadMaterial } from '../../../components'
-import { useCatMateriales } from '../../../hooks'
+import { operaciones } from '../../../components/SPTable'
+import { SpDialog, SpTableMaterial, SpModalBasic, SpAlert, FormLoadMaterial, SpTitle } from '../../../components'
+import useHandle from '../../commons/hooks/useHandle'
+import { GET_ALL } from '../../../graphQL/front/Querys/CatMateriales'
+import { ITableParams } from '../../../components/SPTable/Types/ITable'
+import { CatMaterialesDataAll } from '../../../types/Categorias'
+import { useLazyQuery } from '@apollo/client'
+import { nameComponents } from '../../../types/Columns'
 
-const Cursos = () => {
-  const router = useRouter()
-  const { data, loading, error } = useCatMateriales()
+const name: nameComponents = 'Categorias de materiales'
 
-  const [openEdit, setOpenEdit] = useState(false)
-  const [usuario, setUsuario] = useState<string>()
-  const [openNew, setOpenNew] = useState(false)
-
-  const onEditOronDelete = useCallback(
-    (rowData: any, proceso: string) => {
-      if (proceso === 'edit') {
-        setOpenEdit(true)
-      }
-      if (proceso === 'delete') {
-      }
-      setUsuario(rowData)
-    },
-    [router]
-  )
-
-  const onSubmit = useCallback((rowData: any) => {
-    console.log('id old: ', usuario)
-    console.log('new data: ', rowData)
-    setOpenEdit(false)
-    setUsuario(undefined)
-    setOpenNew(false)
-  }, [])
+const Categoria = () => {
+  const get = useLazyQuery<CatMaterialesDataAll, { input: ITableParams }>(GET_ALL)
+  const { state, loading, error, dispatch, handleDelete, onSubmit, fetchData, handleTable } = useHandle({ get, name })
 
   return (
     <Layout>
-      <SpLoading loading={loading} />
-      <>{error && <p>Error: {error.message}</p>}</>
-      <SpTable name={'Categorias'} rows={data} onEditOronDelete={onEditOronDelete} onButtonNew={() => setOpenNew(true)} />
-      {/* create  and edit*/}
-      <SpModalBasic
-        open={openNew || openEdit}
-        title={'Crear categoria'}
-        onClose={() => {
-          setOpenNew(false)
-          setOpenEdit(false)
-        }}
-      >
+      <SpTitle title={name} variant='h4' margin={'0px 0px 20px 0px'} />
+      <SpAlert error={error?.message} loading={loading} />
+      <SpTableMaterial name={name} fetchData={fetchData} handle={(row: any, op: operaciones) => handleTable(row, op)} />
+      <SpModalBasic open={state.openModal} title={'Crear categoria'} onClose={() => dispatch({ type: 'openModal', payload: false })}>
         <FormLoadMaterial onSubmit={onSubmit} onCancel={() => {}} titleBtn={'Guardar'} type={'categoria'} />
       </SpModalBasic>
+      <SpDialog
+        open={state.openDelete}
+        title={'Eliminar'}
+        description={'¿Desea eliminar este registro?'}
+        onCancel={() => dispatch({ type: 'openDelete', payload: false })}
+        onSubmit={handleDelete}
+      />
     </Layout>
   )
 }
 
-export default Cursos
+export default Categoria

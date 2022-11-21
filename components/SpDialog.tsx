@@ -17,7 +17,7 @@ interface Props {
 export default function SpDialog({ description, open, onCancel = () => {}, onSubmit = () => {}, title }: Props) {
   return (
     <div>
-      <Dialog open={open} onClose={onCancel} aria-labelledby='draggable-dialog-title'>
+      <Dialog open={open} onClose={onCancel} aria-labelledby='draggable-dialog-title' sx={{ padding: '40px' }}>
         <DialogTitle style={{ cursor: 'move' }} id='draggable-dialog-title'>
           {title}
         </DialogTitle>

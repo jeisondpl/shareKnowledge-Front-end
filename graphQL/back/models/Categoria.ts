@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const mongoosePaginate = require('mongoose-paginate-v2')
 
 
 const CategoriaSchema = mongoose.Schema({
@@ -17,6 +18,7 @@ const CategoriaSchema = mongoose.Schema({
         default: Date.now(),
     },
 })
+CategoriaSchema.plugin(mongoosePaginate)
 
 const Categoria = mongoose.models.Categoria || mongoose.model('Categoria', CategoriaSchema)
 

@@ -6,7 +6,7 @@ import { CREATE_USER } from '../graphQL/front/Mutations/Usuarios'
 import { InputRegister } from '../types/Usuario'
 import { useRouter } from 'next/router'
 import useAlert from '../components/Hooks/useAlert'
-import SpAlerta from '../components/SpAlert'
+import SpAlert from '../components/SpAlert'
 
 const Registrar = () => {
   const router = useRouter()
@@ -32,7 +32,7 @@ const Registrar = () => {
   return (
     <LayoutLogin>
       <FormRegister onSubmit={onSubmit} />
-      <SpAlerta success={mensaje.success} loading={loading} error={mensaje.error} />
+      <SpAlert success={mensaje.success} loading={loading} error={mensaje.error} />
     </LayoutLogin>
   )
 }

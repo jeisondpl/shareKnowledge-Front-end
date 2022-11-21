@@ -1,5 +1,6 @@
 import Material from '../../models/Material'
 import { IMaterial } from '../../types/material'
+import { InputUserPaginate } from '../../types/paginate'
 require('dotenv').config({ path: '.env' })
 
 
@@ -20,15 +21,19 @@ export const resolverMaterial = {
 
       return material
     },
-    obtenerTodosMateriales: async (_: any, { }, ctx: any) => {
+    obtenerTodosMateriales: async (_: any, { input }: InputUserPaginate, ctx: any) => {
       try {
-        if (ctx.usuario.rol === 'ADMINISTRADOR') {
-          const material: IMaterial = await Material.find({})
-          return material
-        } else {
-          const material: IMaterial = await Material.find({ usuario: ctx.usuario.id })
-          return material
-        }
+        const { pageIndex, pageSize, globalFilter } = input
+        const material: IMaterial = await Material.paginate({
+          $or: [
+            { nombre: { $regex: globalFilter, $options: 'i' } },
+            { descripcion: { $regex: globalFilter, $options: 'i' } },
+            { url: { $regex: globalFilter, $options: 'i' } },
+          ]
+        },
+          { limit: pageSize, page: pageIndex })
+        return material
+
       } catch (error) {
         throw new Error('Error el obtener los materiales ERROR:' + error)
       }
