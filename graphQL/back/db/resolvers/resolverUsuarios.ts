@@ -27,6 +27,15 @@ const crearToken = ({ usuario, secreta, expiresIn }: PropTokens) => {
   const { id, email, nombre, apellido, rol } = usuario
   return jwt.sign({ id, email, nombre, apellido, rol }, secreta, { expiresIn })
 }
+ 
+
+// "id_object_padre":218,//PREPAGO TODO EN UNO 
+   //"id_object_padre":217,//PREPAGO  
+    //"id_object_padre":216,//VPN
+
+    // "id_object_padre":470, //Mantenedor de Promociones Prepago
+    // "id_object_padre":475, //Mantenedor de Promociones Pospago
+
 
 
 // Resolvers de Usuario

@@ -44,6 +44,14 @@ export const resolverCategoria = {
         throw new Error('Error el obtener los materiales ERROR:' + error)
       }
     },
+    obtenerTodosCatSelect: async (_: any, { }, ctx: any) => {
+      try {
+        const Categorias: any = await Categoria.find({})
+        return Categorias
+      } catch (error) {
+        throw new Error('Error el obtener los Categorias ERROR:' + error)
+      }
+    },
   },
   Mutation: {
     nuevoCategoria: async (_: any, { input }: InputNuevoCategoria) => {

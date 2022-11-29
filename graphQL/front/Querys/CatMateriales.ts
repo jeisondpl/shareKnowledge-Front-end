@@ -21,3 +21,15 @@ export const GET_ALL = gql`
     }
   }
 `
+
+export const GET_ALL_SELET = gql`
+query obtenerTodosCatSelect{
+    obtenerTodosCatSelect{
+      id
+      nombre
+      descripcion
+    }
+  }
+`
+
+

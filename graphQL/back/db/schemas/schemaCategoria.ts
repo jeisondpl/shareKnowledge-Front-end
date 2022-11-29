@@ -38,6 +38,7 @@ export const schemasCategoria = gql`
   type Query {
     obtenerCategoria(id: ID!): Categoria
     obtenerTodosCategoria(input: PaguinateInputCategoriaMateriales): paguinateCategorias
+    obtenerTodosCatSelect: [Categoria]
   }
 
   type Mutation {

@@ -17,16 +17,13 @@ const Login = () => {
 
   const { onError } = useAlert()
 
-  const onSubmit = useCallback(
-    async (values: any) => {
-      await autenticarUsuario({
-        variables: {
-          input: values,
-        },
-      })
-    },
-    [autenticarUsuario]
-  )
+  const onSubmit = useCallback(async (values: any) => {
+    await autenticarUsuario({
+      variables: {
+        input: values,
+      },
+    })
+  }, [])
 
   if (data?.autenticarUsuario.token) {
     dispatch(auth(data))

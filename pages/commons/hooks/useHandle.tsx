@@ -45,6 +45,7 @@ const useHandle = ({ get, name }: Props) => {
           input: values,
         },
       })
+      console.log(name)
       return modulos[name](data)
     },
     [gethandle, name]

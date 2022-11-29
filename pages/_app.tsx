@@ -16,16 +16,16 @@ function MyApp({ Component, pageProps }: AppProps) {
     <div style={{ background: '#F5F5F5' }}>
       <Provider store={store}>
         <PersistGate loading={<SpLoading loading={true} />} persistor={persistor}>
-          <ApolloProvider client={client}>
-            <Component {...pageProps} />
-            <style jsx global>
-              {`
-                body {
-                  background: ${color.backgroupd};
-                }
-              `}
-            </style>
-          </ApolloProvider>
+        <ApolloProvider client={client}>
+          <Component {...pageProps} />
+          <style jsx global>
+            {`
+              body {
+                background: ${color.backgroupd};
+              }
+            `}
+          </style>
+        </ApolloProvider>
         </PersistGate>
       </Provider>
     </div>

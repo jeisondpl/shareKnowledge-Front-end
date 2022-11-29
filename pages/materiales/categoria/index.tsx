@@ -8,7 +8,7 @@ import { CatMaterialesDataAll } from '../../../types/Categorias'
 import { useLazyQuery } from '@apollo/client'
 import { nameComponents } from '../../../types/Columns'
 
-const name: nameComponents = 'Categorias de materiales'
+const name: nameComponents = 'CatMateriales'
 
 const Categoria = () => {
   const get = useLazyQuery<CatMaterialesDataAll, { input: ITableParams }>(GET_ALL)
@@ -16,7 +16,7 @@ const Categoria = () => {
 
   return (
     <Layout>
-      <SpTitle title={name} variant='h4' margin={'0px 0px 20px 0px'} />
+      <SpTitle title='Categorias de materiales' variant='h4' margin={'0px 0px 20px 0px'} />
       <SpAlert error={error?.message} loading={loading} />
       <SpTableMaterial name={name} fetchData={fetchData} handle={(row: any, op: operaciones) => handleTable(row, op)} />
       <SpModalBasic open={state.openModal} title={'Crear categoria'} onClose={() => dispatch({ type: 'openModal', payload: false })}>

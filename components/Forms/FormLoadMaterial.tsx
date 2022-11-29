@@ -8,7 +8,7 @@ import { useQuery } from '@apollo/client'
 import { InputRegister } from '../../types/Usuario'
 import SpAlert from '../SpAlert'
 import { CatMateriales } from '../../types/Categorias'
-import { GET_ALL } from '../../graphQL/front/Querys/CatMateriales' 
+import { GET_ALL_SELET } from '../../graphQL/front/Querys/CatMateriales'
 
 interface Props {
   onSubmit: (values: InputRegister) => void
@@ -18,11 +18,12 @@ interface Props {
   selectData?: CatMateriales
 }
 
-const FormLoad = ({ onSubmit, onCancel, titleBtn = 'Registrar', type = 'material',selectData }: Props) => {
+const FormLoad = ({ onSubmit, onCancel, titleBtn = 'Registrar', type = 'material', selectData }: Props) => {
   const [age, setAge] = useState('')
 
-  
-  const { data: dataCat, loading, error } = useQuery<{ obtenerTodosCategoriaMaterial: CatMateriales[] }, CatMateriales>(GET_ALL)
+  const { data: dataCat, loading, error } = useQuery<{ obtenerTodosCatSelect: CatMateriales[] }, CatMateriales>(GET_ALL_SELET)
+
+  console.log(dataCat)
 
   const handleChange = (event: SelectChangeEvent) => {
     setAge(event.target.value as string)
@@ -34,13 +35,18 @@ const FormLoad = ({ onSubmit, onCancel, titleBtn = 'Registrar', type = 'material
 
       <Formik
         enableReinitialize={false}
-        initialValues={InitialValueRegister}
+        initialValues={{
+          nombre: '',
+          categoria: '',
+          descripcion: '',
+          file: '',
+        }}
         validationSchema={SchemaRegister}
-        onSubmit={(values) =>
-          onSubmit({
-            ...values,
-            rol: 'VERIFICACION',
-          })
+        onSubmit={
+          (values) => console.log(values)
+          // onSubmit({
+          //   ...values,
+          // })
         }
       >
         {({ values, handleChange, handleBlur, touched, handleSubmit }) => (
@@ -52,21 +58,23 @@ const FormLoad = ({ onSubmit, onCancel, titleBtn = 'Registrar', type = 'material
           >
             <>
               <TextField
+                id='nombre'
                 margin='normal'
                 fullWidth
-                label={type === 'material' ? 'Nombre del material' : 'Nombre de la categoria'}
+                label={type === 'material' ? 'nombre del material' : 'nombre de la nombre'}
                 name='nombre'
                 autoComplete='off'
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.nombre}
               />
+
               {type === 'material' && (
                 <FormControl fullWidth>
                   <InputLabel id='demo-simple-select-label'>Categoria</InputLabel>
-                  <Select labelId='demo-simple-select-label' id='demo-simple-select' value={age} label='Age' onChange={handleChange}>
+                  <Select name='categoria' labelId='demo-simple-select-label' id='categoria' value={age} label='Age' onChange={handleChange}>
                     {dataCat &&
-                      dataCat?.obtenerTodosCategoriaMaterial.map((categoria: CatMateriales) => (
+                      dataCat?.obtenerTodosCatSelect.map((categoria: CatMateriales) => (
                         <MenuItem key={categoria.id} value={categoria.id}>
                           {categoria.nombre}
                         </MenuItem>
@@ -76,6 +84,8 @@ const FormLoad = ({ onSubmit, onCancel, titleBtn = 'Registrar', type = 'material
               )}
               <FormControl fullWidth>
                 <TextareaAutosize
+                  name='descripcion'
+                  id='descripcion'
                   style={{
                     width: '100%',
                     height: '200px',
