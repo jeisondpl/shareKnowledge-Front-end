@@ -12,13 +12,36 @@ const name: nameComponents = 'CatMateriales'
 
 const Categoria = () => {
   const get = useLazyQuery<CatMaterialesDataAll, { input: ITableParams }>(GET_ALL)
+
+
+
+
+  
   const { state, loading, error, dispatch, handleDelete, onSubmit, fetchData, handleTable } = useHandle({ get, name })
 
   return (
     <Layout>
       <SpTitle title='Categorias de materiales' variant='h4' margin={'0px 0px 20px 0px'} />
       <SpAlert error={error?.message} loading={loading} />
-      <SpTableMaterial name={name} fetchData={fetchData} handle={(row: any, op: operaciones) => handleTable(row, op)} />
+
+
+
+
+
+
+
+      <SpTableMaterial 
+      name={name} 
+      fetchData={fetchData} 
+      handle={(row: any, op: operaciones) => handleTable(row, op)} />
+
+
+
+
+
+
+
+
       <SpModalBasic open={state.openModal} title={'Crear categoria'} onClose={() => dispatch({ type: 'openModal', payload: false })}>
         <FormLoadMaterial onSubmit={onSubmit} onCancel={() => {}} titleBtn={'Guardar'} type={'categoria'} />
       </SpModalBasic>

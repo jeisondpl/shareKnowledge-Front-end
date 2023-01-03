@@ -36,8 +36,17 @@ interface Props {
 
 const useHandle = ({ get, name }: Props) => {
   const [state, dispatch] = useReducer(reducer, initialStates)
-  const [gethandle, { loading, error }] = get
+ 
+ 
+ 
+ 
+  const [gethandle, { loading, error,refetch }] = get
+  
 
+
+
+
+  
   const fetchData = useCallback(
     async (values: ITableParams) => {
       const { data } = await gethandle({
@@ -45,8 +54,10 @@ const useHandle = ({ get, name }: Props) => {
           input: values,
         },
       })
+
+      
       console.log(name)
-      return modulos[name](data)
+      return refetch(data)
     },
     [gethandle, name]
   )

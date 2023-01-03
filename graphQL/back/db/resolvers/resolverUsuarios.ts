@@ -10,7 +10,7 @@ require('dotenv').config({ path: '.env' })
 interface PropTokens {
   usuario: usuario
   secreta: string
-  expiresIn: string
+  expiresIn: string 
 }
 
 interface InputNuevoUsuario {
@@ -38,6 +38,7 @@ const crearToken = ({ usuario, secreta, expiresIn }: PropTokens) => {
 
 
 
+// Resolvers de Usuario
 // Resolvers de Usuario
 export const resolverUsuarios = {
   Query: {
